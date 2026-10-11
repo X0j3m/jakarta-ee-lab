@@ -1,5 +1,6 @@
 package com.x0j3m.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -20,7 +21,9 @@ import java.util.UUID;
 public class User {
     @Id
     private UUID id;
+    @Column(name = "username")
     private String username;
+    @Column(name = "role")
     private Role role;
     private List<Politician> politicians;
 }
