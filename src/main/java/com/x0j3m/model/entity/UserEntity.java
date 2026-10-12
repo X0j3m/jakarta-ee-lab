@@ -1,9 +1,6 @@
-package com.x0j3m.model;
+package com.x0j3m.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,14 +13,15 @@ import java.util.UUID;
 @Table(name = "users")
 @Data
 @Builder
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserEntity {
     @Id
     private UUID id;
     @Column(name = "username")
     private String username;
     @Column(name = "role")
     private Role role;
-    private List<Politician> politicians;
+    @OneToMany(mappedBy = "user")
+    private List<PoliticianEntity> politicians;
 }

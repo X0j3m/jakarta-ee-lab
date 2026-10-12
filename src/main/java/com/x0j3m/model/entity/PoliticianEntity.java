@@ -1,4 +1,4 @@
-package com.x0j3m.model;
+package com.x0j3m.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class Politician {
+public class PoliticianEntity {
     @Id
     private UUID id;
     @Column(name = "name")
@@ -28,5 +28,5 @@ public class Politician {
     private int constituency;
     @ManyToOne
     @JoinColumn(name = "political_party_id")
-    private PoliticalParty politicalParty;
+    private PoliticalPartyEntity politicalParty;
 }

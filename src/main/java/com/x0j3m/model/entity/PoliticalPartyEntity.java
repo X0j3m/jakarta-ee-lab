@@ -1,9 +1,6 @@
-package com.x0j3m.model;
+package com.x0j3m.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +16,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class PoliticalParty {
+public class PoliticalPartyEntity {
     @Id
     private UUID id;
     @Column(name = "name")
@@ -28,5 +25,6 @@ public class PoliticalParty {
     private LocalDate foundationDate;
     @Column(name = "orientation")
     private Orientation orientation;
-    private List<Politician> politicians;
+    @OneToMany(mappedBy = "politicalParty")
+    private List<PoliticianEntity> politicians;
 }
