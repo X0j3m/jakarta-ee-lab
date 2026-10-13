@@ -1,6 +1,5 @@
 package com.x0j3m.service;
 
-
 import com.x0j3m.data.UserRepository;
 import com.x0j3m.model.dto.UserRequestDto;
 import com.x0j3m.model.dto.UserResponseDto;
@@ -25,6 +24,7 @@ public class UserService {
                 .stream()
                 .map(userMapper::toDto)
                 .toList();
+
     }
 
     public UserResponseDto fetchUserById(UUID id) {
@@ -38,14 +38,9 @@ public class UserService {
         return user.getId().toString();
     }
 
-    public String updateUserById(UUID id, UserRequestDto userDto) {
-        Optional<UserEntity> user = userRepository.getById(id);
-        if (user.isEmpty()) {
-            throw new IllegalArgumentException("User not found");
-        }
+    public void updateUserById(UUID id, UserRequestDto userDto) {
         UserEntity updatedUser = userMapper.toEntity(id, userDto);
         userRepository.save(updatedUser);
-        return updatedUser.getId().toString();
     }
 
     public void deleteUserById(UUID id) {

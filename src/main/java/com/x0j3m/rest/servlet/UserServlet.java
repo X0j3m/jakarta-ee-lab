@@ -2,9 +2,9 @@ package com.x0j3m.rest.servlet;
 
 import com.x0j3m.model.dto.UserRequestDto;
 import com.x0j3m.model.dto.UserResponseDto;
-import com.x0j3m.model.entity.UserEntity;
-import com.x0j3m.model.mapper.UserMapper;
+import com.x0j3m.service.ImageService;
 import com.x0j3m.service.UserService;
+import com.x0j3m.service.util.ImageMediaTypeDetector;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletConfig;
@@ -17,38 +17,35 @@ import jakarta.ws.rs.core.HttpHeaders;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @WebServlet("/api/users/*")
 public class UserServlet extends HttpServlet {
     private UserService userService;
+    private ImageService imageService;
     private final Jsonb jsonb = JsonbBuilder.create();
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         this.userService = (UserService) config.getServletContext().getAttribute(UserService.class.getName());
+        this.imageService = (ImageService) config.getServletContext().getAttribute(ImageService.class.getName());
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String pathInfo = request.getPathInfo();
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-
         if (pathInfo == null || pathInfo.equals("/")) {
+            List<UserResponseDto> users = userService.fetchAll();
+            response.getWriter().write(jsonb.toJson(users));
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write(jsonb.toJson(userService.fetchAll()));
             return;
         }
 
         String[] splits = pathInfo.split("/");
-        if (splits.length != 2) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid resource path format");
-            return;
-        }
 
         UUID userId;
         try {
@@ -58,30 +55,74 @@ public class UserServlet extends HttpServlet {
             return;
         }
 
-        if (userService.existsById(userId)) {
-            UserResponseDto userDto = userService.fetchUserById(userId);
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write(jsonb.toJson(userDto));
+        if (splits.length == 3 && splits[2].equals("image")) {
+            if (userService.existsById(userId)) {
+                byte[] picture = imageService.fetchImage(userId.toString());
+                if(picture.length == 0){
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+                    return;
+                }
+                response.setContentType(ImageMediaTypeDetector.detect(picture));
+                response.getOutputStream().write(picture);
+                response.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+            }
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+            if (userService.existsById(userId)) {
+                UserResponseDto userDto = userService.fetchUserById(userId);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().write(jsonb.toJson(userDto));
+            } else {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+            }
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
+        if (pathInfo == null || pathInfo.equals("/")) {
+            try (BufferedReader reader = request.getReader()) {
+                String body = reader.lines().collect(Collectors.joining(System.lineSeparator()));
+                UserRequestDto userDto = jsonb.fromJson(body, UserRequestDto.class);
+                String userId = userService.createUser(userDto);
+                response.setStatus(HttpServletResponse.SC_CREATED);
+                response.setHeader(HttpHeaders.LOCATION, "/api/users/" + userId);
+                return;
+            } catch (Exception e) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid request body");
+                return;
+            }
+        }
 
-        if (pathInfo != null || !pathInfo.equals("/")) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid resource path format");
+        String[] splits = pathInfo.split("/");
+
+        UUID userId;
+        try {
+            userId = UUID.fromString(splits[1]);
+        } catch (IllegalArgumentException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid UUID format");
             return;
         }
 
-        try (BufferedReader reader = request.getReader()) {
-            String body = reader.lines().collect(Collectors.joining(System.lineSeparator()));
-            UserRequestDto userDto = jsonb.fromJson(body, UserRequestDto.class);
-            String userId = userService.createUser(userDto);
+        if (splits.length != 3 || splits[2].isEmpty()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid resource path format");
+            return;
+        }
+        if(!userService.existsById(userId)){
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+            return;
+        }
+
+        if (splits[2].equals("image")) {
+            imageService.createImage(userId.toString(), request.getInputStream());
             response.setStatus(HttpServletResponse.SC_CREATED);
-            response.setHeader(HttpHeaders.LOCATION, "/api/users/" + userId);
+            response.setHeader(HttpHeaders.LOCATION, "/api/users/" + userId + "/image");
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid resource path format");
         }
     }
 
@@ -93,18 +134,24 @@ public class UserServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid resource path format");
             return;
         }
-
         String[] splits = pathInfo.split("/");
-        if (splits.length != 2) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid resource path format");
-            return;
-        }
 
         UUID userId;
         try {
             userId = UUID.fromString(splits[1]);
         } catch (IllegalArgumentException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid UUID format");
+            return;
+        }
+
+        if (splits.length == 3 && splits[2].equals("image")) {
+            if(!userService.existsById(userId)){
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+                return;
+            }
+            imageService.createImage(userId.toString(), request.getInputStream());
+            response.setStatus(HttpServletResponse.SC_CREATED);
+            response.setHeader(HttpHeaders.LOCATION, "/api/users/" + userId + "/image");
             return;
         }
 
@@ -114,18 +161,15 @@ public class UserServlet extends HttpServlet {
             userService.updateUserById(userId, userDto);
             response.setStatus(HttpServletResponse.SC_CREATED);
             response.setHeader(HttpHeaders.LOCATION, "/api/users/" + userId);
+        }catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid request body");
         }
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
-
         String[] splits = pathInfo.split("/");
-        if (splits.length != 2) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid resource path format");
-            return;
-        }
 
         UUID userId;
         try {
@@ -135,12 +179,20 @@ public class UserServlet extends HttpServlet {
             return;
         }
 
-        if (!userService.existsById(userId)) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
-            return;
-        }
+        if (splits.length == 3) {
+            imageService.deleteImage(userId.toString());
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        } else if (splits.length == 2) {
+            if (!userService.existsById(userId)) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+                return;
+            }
 
-        userService.deleteUserById(userId);
-        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            userService.deleteUserById(userId);
+            imageService.deleteImage(userId.toString());
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid resource path format");
+        }
     }
 }

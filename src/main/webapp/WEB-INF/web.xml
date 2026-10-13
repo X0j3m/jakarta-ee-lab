@@ -5,16 +5,30 @@
                              https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
 
+    <context-param>
+        <param-name>image.directory</param-name>
+        <param-value>resources/img</param-value>
+    </context-param>
+
+
     <listener>
-        <listener-class>com.x0j3m.config.UserRepositoryContextListener</listener-class>
+        <listener-class>com.x0j3m.config.repository.ImageRepositoryContextListener</listener-class>
+    </listener>
+    
+    <listener>
+        <listener-class>com.x0j3m.config.repository.UserRepositoryContextListener</listener-class>
     </listener>
 
     <listener>
         <listener-class>com.x0j3m.config.UserMapperContextListener</listener-class>
     </listener>
-
+    
     <listener>
-        <listener-class>com.x0j3m.config.UserServiceContextListener</listener-class>
+        <listener-class>com.x0j3m.config.service.ImageServiceContextListener</listener-class>
+    </listener>
+    
+    <listener>
+        <listener-class>com.x0j3m.config.service.UserServiceContextListener</listener-class>
     </listener>
 
 </web-app>

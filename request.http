@@ -1,0 +1,55 @@
+@serverUrl = http://localhost:9080
+@testUserId = 99999999-9999-9999-9999-999999999999
+
+### Get all users
+GET {{serverUrl}}/jakarta-ee-lab/api/users
+
+### Get single user
+
+GET {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}
+
+### Create user
+
+POST {{serverUrl}}/jakarta-ee-lab/api/users
+Content-Type: application/json
+
+{
+  "username": "testUser",
+  "role": "USER"
+}
+
+### Create/update user
+
+PUT {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}
+Content-Type: application/json
+
+{
+  "username": "newUser",
+  "role": "USER"
+}
+
+### Delete user
+
+DELETE {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}
+
+### Get user image
+
+GET {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}/image
+
+### Create user image
+
+POST {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}/image
+Content-Type: image/jpeg
+
+< ./user-image.jpg
+
+### Update/create user image
+
+PUT {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}/image
+Content-Type: image/jpeg
+
+< ./user-image.jpg
+
+### Delete user image
+
+DELETE {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}/image

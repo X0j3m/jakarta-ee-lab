@@ -1,4 +1,4 @@
-package com.x0j3m.config;
+package com.x0j3m.config.service;
 
 import com.x0j3m.data.UserRepository;
 import com.x0j3m.model.mapper.UserMapper;

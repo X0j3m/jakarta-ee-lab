@@ -1,4 +1,4 @@
-package com.x0j3m.config;
+package com.x0j3m.config.repository;
 
 import com.x0j3m.data.UserRepository;
 import com.x0j3m.model.entity.Role;
