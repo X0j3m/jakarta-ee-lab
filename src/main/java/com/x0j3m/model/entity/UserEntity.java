@@ -20,6 +20,8 @@ public class UserEntity {
     private UUID id;
     @Column(name = "username")
     private String username;
+    @Column (name = "age")
+    private int age;
     @Column(name = "role")
     private Role role;
     @OneToMany(mappedBy = "user")

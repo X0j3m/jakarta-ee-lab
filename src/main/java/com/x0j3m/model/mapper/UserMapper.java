@@ -12,6 +12,7 @@ public class UserMapper {
         return UserEntity.builder()
                 .id(id)
                 .username(userDto.username())
+                .age(Integer.parseInt(userDto.age()))
                 .role(Role.valueOf(userDto.role()))
                 .build();
     }
@@ -20,6 +21,7 @@ public class UserMapper {
         return UserResponseDto.builder()
                 .id(userEntity.getId().toString())
                 .username(userEntity.getUsername())
+                .age(String.valueOf(userEntity.getAge()))
                 .role(userEntity.getRole().name())
                 .build();
     }

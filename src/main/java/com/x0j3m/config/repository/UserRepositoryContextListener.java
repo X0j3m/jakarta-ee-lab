@@ -17,26 +17,31 @@ public class UserRepositoryContextListener implements ServletContextListener {
             UserEntity.builder()
                     .id(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                     .username("admin")
+                    .age(25)
                     .role(Role.ADMIN)
                     .build(),
             UserEntity.builder()
                     .id(UUID.fromString("22222222-2222-2222-2222-222222222222"))
                     .username("user1")
+                    .age(26)
                     .role(Role.USER)
                     .build(),
             UserEntity.builder()
                     .id(UUID.fromString("33333333-3333-3333-3333-333333333333"))
                     .username("user2")
+                    .age(27)
                     .role(Role.USER)
                     .build(),
             UserEntity.builder()
                     .id(UUID.fromString("44444444-4444-4444-4444-444444444444"))
                     .username("user3")
+                    .age(28)
                     .role(Role.USER)
                     .build(),
             UserEntity.builder()
                     .id(UUID.fromString("55555555-5555-5555-5555-555555555555"))
                     .username("user4")
+                    .age(29)
                     .role(Role.USER)
                     .build()
     );

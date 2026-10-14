@@ -15,6 +15,7 @@ Content-Type: application/json
 
 {
   "username": "testUser",
+  "age": 18,
   "role": "USER"
 }
 
@@ -25,6 +26,7 @@ Content-Type: application/json
 
 {
   "username": "newUser",
+  "age": 19,
   "role": "USER"
 }
 
