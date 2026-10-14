@@ -29,4 +29,7 @@ public class Politician {
     @ManyToOne
     @JoinColumn(name = "political_party_id")
     private PoliticalParty politicalParty;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

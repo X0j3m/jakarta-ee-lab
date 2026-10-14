@@ -23,6 +23,8 @@ public class User {
     private UUID id;
     @Column(name = "username")
     private String username;
+    @Column(name = "age")
+    private int age;
     @Column(name = "role")
     private Role role;
     private List<Politician> politicians;
