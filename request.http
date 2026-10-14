@@ -50,7 +50,7 @@ Content-Type: image/jpeg
 PUT {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}/image
 Content-Type: image/jpeg
 
-< ./user-image.jpg
+< ./user-image1.jpg
 
 ### Delete user image
 

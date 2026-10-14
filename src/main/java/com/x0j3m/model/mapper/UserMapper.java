@@ -12,7 +12,7 @@ public class UserMapper {
         return UserEntity.builder()
                 .id(id)
                 .username(userDto.username())
-                .age(Integer.parseInt(userDto.age()))
+                .age(userDto.age())
                 .role(Role.valueOf(userDto.role()))
                 .build();
     }
