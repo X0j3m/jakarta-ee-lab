@@ -7,6 +7,16 @@
         <feature>microProfile-7.1</feature>
     </featureManager>
 
+    <library id="h2Lib">
+        <fileset dir="${shared.resource.dir}/h2" includes="*.jar"/>
+    </library>
+
+    <jdbcDriver id="h2Driver" libraryRef="h2Lib"/>
+
+    <dataSource id="h2DataSource" jndiName="jdbc/h2" jdbcDriverRef="h2Driver">
+        <properties URL="jdbc:h2:file:C:/temp/jakarta-ee-lab;AUTO_SERVER=TRUE" user="sa" password=""/>
+    </dataSource>
+
     <!-- This template enables security. To get the full use of all the capabilities, a keystore and user registry are required. -->
 
     <!-- For the keystore, default keys are generated and stored in a keystore. To provide the keystore password, generate an 

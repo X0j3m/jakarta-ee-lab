@@ -1,13 +1,13 @@
-package com.x0j3m.rest.servlet;
+package com.x0j3m.web.servlet;
 
-import com.x0j3m.model.dto.UserRequestDto;
-import com.x0j3m.model.dto.UserResponseDto;
+import com.x0j3m.model.dto.user.UserRequestDto;
+import com.x0j3m.model.dto.user.UserResponseDto;
 import com.x0j3m.service.ImageService;
 import com.x0j3m.service.UserService;
 import com.x0j3m.service.util.ImageMediaTypeDetector;
+import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,17 +21,16 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@WebServlet("/api/users/*")
+@WebServlet("/api/servlet/users/*")
 public class UserServlet extends HttpServlet {
-    private UserService userService;
-    private ImageService imageService;
+    private final UserService userService;
+    private final ImageService imageService;
     private final Jsonb jsonb = JsonbBuilder.create();
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        this.userService = (UserService) config.getServletContext().getAttribute(UserService.class.getName());
-        this.imageService = (ImageService) config.getServletContext().getAttribute(ImageService.class.getName());
+    @Inject
+    public UserServlet(UserService userService, ImageService imageService) {
+        this.userService = userService;
+        this.imageService = imageService;
     }
 
     @Override

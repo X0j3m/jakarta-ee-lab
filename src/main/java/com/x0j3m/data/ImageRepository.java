@@ -1,22 +1,35 @@
 package com.x0j3m.data;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 
+@ApplicationScoped
 public class ImageRepository {
-    private final Path imageStoragePath;
 
-    public ImageRepository(String imageStoragePathString) {
-        imageStoragePath = Path.of(imageStoragePathString);
+    private String storagePathConfig = "C:\\temp\\images";
+
+    private Path imageStoragePath;
+
+    @Inject
+    public ImageRepository() {
+    }
+
+    @PostConstruct
+    public void init() {
+        this.imageStoragePath = Path.of(storagePathConfig);
         try {
             if (!Files.exists(imageStoragePath)) {
                 Files.createDirectories(imageStoragePath);
-                System.out.println("Images directory created: " + imageStoragePath);
+                System.out.println("Images directory created: " + imageStoragePath.toAbsolutePath());
             }
         } catch (IOException e) {
-            throw new RuntimeException("Cannot create images directory: " + imageStoragePath + " . Error: " + e);
+            throw new RuntimeException("Cannot create images directory: " + imageStoragePath + ". Error: " + e, e);
         }
     }
 

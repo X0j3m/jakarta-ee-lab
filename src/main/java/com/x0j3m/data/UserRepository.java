@@ -1,29 +1,55 @@
 package com.x0j3m.data;
 
+import com.x0j3m.config.AppInit;
 import com.x0j3m.model.entity.UserEntity;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class UserRepository {
-    private final Map<UUID, UserEntity> usersStorage = new ConcurrentHashMap<>();
 
+    @PersistenceContext(unitName = "H2PersistenceUnit")
+    private EntityManager entityManager;
+
+    @PostConstruct
+    public void init() {
+        if (getAll().isEmpty()) {
+            for (UserEntity user : AppInit.INIT_USERS_LIST) {
+                save(user);
+            }
+        }
+    }
+
+    @Transactional
     public List<UserEntity> getAll() {
-        return List.copyOf(usersStorage.values());
+        return entityManager.createQuery("SELECT u FROM UserEntity u", UserEntity.class).getResultList();
     }
 
+    @Transactional
     public Optional<UserEntity> getById(UUID id) {
-        return Optional.ofNullable(usersStorage.get(id));
+        return Optional.ofNullable(entityManager.find(UserEntity.class, id));
     }
 
+    @Transactional
     public void save(UserEntity user) {
-        usersStorage.put(user.getId(), user);
+        if (entityManager.find(UserEntity.class, user.getId()) == null) {
+            entityManager.persist(user);
+        } else {
+            entityManager.merge(user);
+        }
     }
 
-    public void delete(UUID userId) {
-        usersStorage.remove(userId);
+    @Transactional
+    public void delete(UUID id) {
+        entityManager.remove(entityManager.find(UserEntity.class, id));
     }
 }

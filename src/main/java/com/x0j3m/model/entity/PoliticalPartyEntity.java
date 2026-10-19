@@ -25,6 +25,4 @@ public class PoliticalPartyEntity {
     private LocalDate foundationDate;
     @Column(name = "orientation")
     private Orientation orientation;
-    @OneToMany(mappedBy = "politicalParty")
-    private List<PoliticianEntity> politicians;
 }

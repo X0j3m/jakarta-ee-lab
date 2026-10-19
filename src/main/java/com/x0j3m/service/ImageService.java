@@ -1,16 +1,16 @@
 package com.x0j3m.service;
 
 import com.x0j3m.data.ImageRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+@ApplicationScoped
 public class ImageService {
-    private final ImageRepository imageRepository;
-
-    public ImageService(ImageRepository imageRepository) {
-        this.imageRepository = imageRepository;
-    }
+    @Inject
+    private ImageRepository imageRepository;
 
     public byte[] fetchImage(String imageName) {
         return imageRepository.getImage(imageName).orElse(new byte[0]);

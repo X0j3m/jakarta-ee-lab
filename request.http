@@ -1,57 +1,94 @@
 @serverUrl = http://localhost:9080
+@servletApi = jakarta-ee-lab/api/servlet
+@restApi = jakarta-ee-lab/api/rest
 @testUserId = 99999999-9999-9999-9999-999999999999
+@testPoliticalPartyId = 99999999-9999-9999-9999-999999999999
 
 ### Get all users
-GET {{serverUrl}}/jakarta-ee-lab/api/users
+GET {{serverUrl}}/{{servletApi}}/users
 
 ### Get single user
 
-GET {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}
+GET {{serverUrl}}/{{servletApi}}/users/{{testUserId}}
 
 ### Create user
 
-POST {{serverUrl}}/jakarta-ee-lab/api/users
+POST {{serverUrl}}/{{servletApi}}/users
 Content-Type: application/json
 
 {
   "username": "testUser",
-  "age": 18,
+  "birthDate": "2021-11-11",
   "role": "USER"
 }
 
 ### Create/update user
 
-PUT {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}
+PUT {{serverUrl}}/{{servletApi}}/users/{{testUserId}}
 Content-Type: application/json
 
 {
   "username": "newUser",
-  "age": 19,
+  "birthDate": "2020-01-01",
   "role": "USER"
 }
 
 ### Delete user
 
-DELETE {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}
+DELETE {{serverUrl}}/{{servletApi}}/users/{{testUserId}}
 
 ### Get user image
 
-GET {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}/image
+GET {{serverUrl}}/{{servletApi}}/users/{{testUserId}}/image
 
 ### Create user image
 
-POST {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}/image
+POST {{serverUrl}}/{{servletApi}}/users/{{testUserId}}/image
 Content-Type: image/jpeg
 
 < ./user-image.jpg
 
 ### Update/create user image
 
-PUT {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}/image
+PUT {{serverUrl}}/{{servletApi}}/users/{{testUserId}}/image
 Content-Type: image/jpeg
 
 < ./user-image1.jpg
 
 ### Delete user image
 
-DELETE {{serverUrl}}/jakarta-ee-lab/api/users/{{testUserId}}/image
+DELETE {{serverUrl}}/{{servletApi}}/users/{{testUserId}}/image
+
+### Get all political parties
+
+GET {{serverUrl}}/{{restApi}}/political-parties
+
+### Get single political party
+
+GET {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}
+
+### Create political party
+
+POST {{serverUrl}}/{{restApi}}/political-parties
+Content-Type: application/json
+
+{
+  "name": "New Political Party",
+  "foundationDate": "2000-01-01",
+  "orientation": "CENTER"
+}
+
+### Update/create political party
+
+PUT {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}
+Content-Type: application/json
+
+{
+  "name": "Test Political Party",
+  "foundationDate": "1999-11-11",
+  "orientation": "CENTER"
+}
+
+### Delete political party
+
+DELETE {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}

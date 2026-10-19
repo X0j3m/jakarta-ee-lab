@@ -1,23 +1,25 @@
 package com.x0j3m.service;
 
 import com.x0j3m.data.UserRepository;
-import com.x0j3m.model.dto.UserRequestDto;
-import com.x0j3m.model.dto.UserResponseDto;
+import com.x0j3m.model.dto.user.UserRequestDto;
+import com.x0j3m.model.dto.user.UserResponseDto;
 import com.x0j3m.model.entity.UserEntity;
 import com.x0j3m.model.mapper.UserMapper;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class UserService {
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
-
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-    }
+    @Inject
+    private UserRepository userRepository;
+    @Inject
+    private UserMapper userMapper;
 
     public List<UserResponseDto> fetchAll() {
         return userRepository.getAll()

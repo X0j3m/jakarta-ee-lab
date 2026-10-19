@@ -1,7 +1,7 @@
-package com.x0j3m.model.dto;
+package com.x0j3m.model.dto.user;
 
 public record UserRequestDto(
         String username,
-        int age,
+        String birthDate,
         String role
 ) {}

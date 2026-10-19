@@ -1,4 +1,4 @@
-package com.x0j3m.model.dto;
+package com.x0j3m.model.dto.user;
 
 import lombok.Builder;
 
@@ -6,6 +6,6 @@ import lombok.Builder;
 public record UserResponseDto(
         String id,
         String username,
-        String age,
+        String birthDate,
         String role
 ) {}

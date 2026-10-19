@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,10 +21,8 @@ public class UserEntity {
     private UUID id;
     @Column(name = "username")
     private String username;
-    @Column (name = "age")
-    private int age;
+    @Column (name = "birth_date")
+    private LocalDate birthDate;
     @Column(name = "role")
     private Role role;
-    @OneToMany(mappedBy = "user")
-    private List<PoliticianEntity> politicians;
 }
