@@ -18,29 +18,17 @@ import java.util.UUID;
 public class PoliticalPartyService {
     @Inject
     private PoliticalPartyRepository politicalPartyRepository;
-    @Inject
-    private PoliticalPartyMapper politicalPartyMapper;
 
-    public List<PoliticalPartyResponseDto> fetchAll() {
-        return politicalPartyRepository.getAll()
-                .stream()
-                .map(politicalPartyMapper::toDto)
-                .toList();
+    public List<PoliticalPartyEntity> fetchAll() {
+        return politicalPartyRepository.getAll();
     }
 
-    public PoliticalPartyResponseDto fetchById(UUID id) {
+    public PoliticalPartyEntity fetchById(UUID id) {
         Optional<PoliticalPartyEntity> politicalParty = politicalPartyRepository.getById(id);
-        return politicalParty.map(politicalPartyMapper::toDto).orElseThrow();
+        return politicalParty.orElseThrow();
     }
 
-    public String createPoliticalParty(PoliticalPartyRequestDto politicalPartyDto) {
-        PoliticalPartyEntity politicalParty = politicalPartyMapper.toEntity(UUID.randomUUID(), politicalPartyDto);
-        politicalPartyRepository.save(politicalParty);
-        return politicalParty.getId().toString();
-    }
-
-    public String updatePoliticalParty(UUID id, PoliticalPartyRequestDto politicalPartyDto) {
-        PoliticalPartyEntity politicalParty = politicalPartyMapper.toEntity(id, politicalPartyDto);
+    public String createPoliticalParty(PoliticalPartyEntity politicalParty) {
         politicalPartyRepository.save(politicalParty);
         return politicalParty.getId().toString();
     }

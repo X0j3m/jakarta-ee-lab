@@ -3,6 +3,7 @@
 @restApi = jakarta-ee-lab/api/rest
 @testUserId = 99999999-9999-9999-9999-999999999999
 @testPoliticalPartyId = 99999999-9999-9999-9999-999999999999
+@testPoliticianId = 99999999-9999-9999-9999-999999999999
 
 ### Get all users
 GET {{serverUrl}}/{{servletApi}}/users
@@ -92,3 +93,45 @@ Content-Type: application/json
 ### Delete political party
 
 DELETE {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}
+
+### Get all politicians
+
+GET {{serverUrl}}/{{restApi}}/politicians
+
+### Get single politician
+
+GET {{serverUrl}}/{{restApi}}/politicians/d76eb6a9-c99e-4556-8704-4f09431bd351
+
+### Create politician
+
+POST {{serverUrl}}/{{restApi}}/politicians
+Content-Type: application/json
+
+{
+  "name": "Imie",
+  "surname": "Nazwisko",
+  "birthDate": "1999-11-11",
+  "constituency": 10,
+  "politicalParty": {
+    "id": "{{testPoliticalPartyId}}"
+  }
+}
+
+### Update/create politician
+
+POST {{serverUrl}}/{{restApi}}/politicians/
+Content-Type: application/json
+
+{
+  "name": "Imie",
+  "surname": "Nazwisko",
+  "birthDate": "1999-11-11",
+  "constituency": 10,
+  "politicalParty": {
+    "id": "{{testPoliticalPartyId}}"
+  }
+}
+
+### Delete politician
+
+DELETE {{serverUrl}}/{{restApi}}/politicians/d76eb6a9-c99e-4556-8704-4f09431bd351

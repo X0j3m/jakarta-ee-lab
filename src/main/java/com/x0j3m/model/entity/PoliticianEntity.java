@@ -29,7 +29,7 @@ public class PoliticianEntity {
     @ManyToOne
     @JoinColumn(name = "political_party_id")
     private PoliticalPartyEntity politicalParty;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private UserEntity user;
 }

@@ -1,7 +1,6 @@
 package com.x0j3m.config;
 
-import com.x0j3m.model.entity.Role;
-import com.x0j3m.model.entity.UserEntity;
+import com.x0j3m.model.entity.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -38,6 +37,68 @@ public class AppInit {
                     .username("user4")
                     .birthDate(LocalDate.of(2004, 4, 4))
                     .role(Role.USER)
+                    .build()
+    );
+
+    public static final List<PoliticalPartyEntity> INIT_POLITICAL_PARTIES_LIST = List.of(
+            PoliticalPartyEntity.builder()
+                    .id(UUID.fromString("AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"))
+                    .name("Partia 1")
+                    .foundationDate(LocalDate.of(2001, 1, 1))
+                    .orientation(Orientation.RIGHT)
+                    .build(),
+            PoliticalPartyEntity.builder()
+                    .id(UUID.fromString("BBBBBBBB-BBBB-BBBB-BBBB-BBBBBBBBBBBB"))
+                    .name("Partia 2")
+                    .foundationDate(LocalDate.of(2002, 2, 2))
+                    .orientation(Orientation.LEFT)
+                    .build(),
+            PoliticalPartyEntity.builder()
+                    .id(UUID.fromString("CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC"))
+                    .name("Partia 3")
+                    .foundationDate(LocalDate.of(2003, 3, 3))
+                    .orientation(Orientation.CENTER)
+                    .build(),
+            PoliticalPartyEntity.builder()
+                    .id(UUID.fromString("DDDDDDDD-DDDD-DDDD-DDDD-DDDDDDDDDDDD"))
+                    .name("Partia 4")
+                    .foundationDate(LocalDate.of(2004, 4, 4))
+                    .orientation(Orientation.CENTER)
+                    .build()
+    );
+
+    public static final List<PoliticianEntity> INIT_POLITICALIANS_LIST = List.of(
+            PoliticianEntity.builder()
+                    .id(UUID.fromString("11111111-AAAA-1111-AAAA-111111111111"))
+                    .name("Imie 1")
+                    .surname("Nazwisko 1")
+                    .birthDate(LocalDate.of(2001, 1, 1))
+                    .constituency(1)
+                    .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(0))
+                    .build(),
+            PoliticianEntity.builder()
+                    .id(UUID.fromString("22222222-BBBB-2222-BBBB-222222222222"))
+                    .name("Imie 2")
+                    .surname("Nazwisko 2")
+                    .birthDate(LocalDate.of(2002, 2, 2))
+                    .constituency(2)
+                    .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(1))
+                    .build(),
+            PoliticianEntity.builder()
+                    .id(UUID.fromString("33333333-CCCC-3333-CCCC-333333333333"))
+                    .name("Imie 3")
+                    .surname("Nazwisko 3")
+                    .birthDate(LocalDate.of(2003, 3, 3))
+                    .constituency(3)
+                    .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(2))
+                    .build(),
+            PoliticianEntity.builder()
+                    .id(UUID.fromString("44444444-DDDD-4444-DDDD-444444444444"))
+                    .name("Imie 4")
+                    .surname("Nazwisko 4")
+                    .birthDate(LocalDate.of(2004, 4, 4))
+                    .constituency(4)
+                    .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(3))
                     .build()
     );
 }

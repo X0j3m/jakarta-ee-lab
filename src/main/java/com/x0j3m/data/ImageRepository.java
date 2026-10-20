@@ -12,7 +12,7 @@ import java.util.Optional;
 @ApplicationScoped
 public class ImageRepository {
 
-    private String storagePathConfig = "C:\\temp\\images";
+    private static final String STORAGE_PATH_CONFIG = "C:\\temp\\images";
 
     private Path imageStoragePath;
 
@@ -22,7 +22,7 @@ public class ImageRepository {
 
     @PostConstruct
     public void init() {
-        this.imageStoragePath = Path.of(storagePathConfig);
+        this.imageStoragePath = Path.of(STORAGE_PATH_CONFIG);
         try {
             if (!Files.exists(imageStoragePath)) {
                 Files.createDirectories(imageStoragePath);
