@@ -25,4 +25,6 @@ public class PoliticalPartyEntity {
     private LocalDate foundationDate;
     @Column(name = "orientation")
     private Orientation orientation;
+    @OneToMany(mappedBy = "politicalParty", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<PoliticianEntity> politicians;
 }

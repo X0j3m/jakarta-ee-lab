@@ -1,8 +1,6 @@
 package com.x0j3m.data;
 
-import com.x0j3m.config.AppInit;
 import com.x0j3m.model.entity.PoliticianEntity;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -20,18 +18,19 @@ public class PoliticianRepository {
     @PersistenceContext(unitName = "H2PersistenceUnit")
     private EntityManager entityManager;
 
-    @PostConstruct
-    public void init() {
-        if (getAll().isEmpty()) {
-            for (PoliticianEntity politician : AppInit.INIT_POLITICALIANS_LIST) {
-                save(politician);
-            }
-        }
+    @Transactional
+    public List<PoliticianEntity> getAll() {
+        return entityManager.createQuery("SELECT p FROM PoliticianEntity p", PoliticianEntity.class).getResultList();
     }
 
     @Transactional
-    public List<PoliticianEntity> getAll() {
-        return entityManager.createQuery("SELECT pp FROM PoliticianEntity pp", PoliticianEntity.class).getResultList();
+    public List<PoliticianEntity> getAllByPartyId(UUID partyId) {
+        return entityManager.createQuery(
+                        "SELECT p FROM PoliticianEntity p WHERE p.politicalParty.id = :partyId",
+                        PoliticianEntity.class
+                )
+                .setParameter("partyId", partyId)
+                .getResultList();
     }
 
     @Transactional

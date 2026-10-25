@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+<f:view>
+    <h:head>
+        <meta charset="UTF-8"/>
+        <title>Jakarta EE lab</title>
+    </h:head>
+    <h:body>
+        <header>
+            <h1>Jakarta EE Lab</h1>
+        </header>
+
+        <nav>
+            <h:button
+                    value="Home"
+                    outcome="/index.xhtml"/>
+
+            <h:button
+                    value="Political Parties"
+                    outcome="/jsf/political-party/political_party__list.xhtml"/>
+        </nav>
+
+        <main>
+            <ui:insert name="content"/>
+        </main>
+
+        <footer>
+            Copyright &#169; 2026, Michał Ptasznik 197933
+        </footer>
+    </h:body>
+</f:view>
+</html>

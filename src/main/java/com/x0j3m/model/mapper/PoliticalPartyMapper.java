@@ -18,7 +18,7 @@ public class PoliticalPartyMapper {
                 .id(id)
                 .name(politicalPartyDto.name())
                 .foundationDate(LocalDate.parse(politicalPartyDto.foundationDate()))
-                .orientation(Orientation.valueOf(politicalPartyDto.orientation()))
+                .orientation(Orientation.valueOf(politicalPartyDto.orientation().toUpperCase()))
                 .build();
     }
 
@@ -27,7 +27,9 @@ public class PoliticalPartyMapper {
                 .id(politicalPartyEntity.getId().toString())
                 .name(politicalPartyEntity.getName())
                 .foundationDate(String.valueOf(politicalPartyEntity.getFoundationDate()))
-                .orientation(politicalPartyEntity.getOrientation().toString())
+                .orientation(politicalPartyEntity.getOrientation().toString().substring(0, 1).toUpperCase()
+                        +
+                        politicalPartyEntity.getOrientation().toString().substring(1).toLowerCase())
                 .build();
     }
 }

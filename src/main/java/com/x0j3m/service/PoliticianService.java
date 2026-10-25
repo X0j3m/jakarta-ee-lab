@@ -39,6 +39,13 @@ public class PoliticianService {
         return politicalParty.map(politicianMapper::toDto).orElseThrow();
     }
 
+    public List<PoliticianResponseDto> fetchAllByPartyId(UUID id) {
+        return politicianRepository.getAllByPartyId(id)
+                .stream()
+                .map(politicianMapper::toDto)
+                .toList();
+    }
+
     public String createPolitician(PoliticianEntity politicianEntity) {
         politicianRepository.save(politicianEntity);
         return politicianEntity.getId().toString();

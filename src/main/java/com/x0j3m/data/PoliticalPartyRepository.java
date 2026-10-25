@@ -1,8 +1,6 @@
 package com.x0j3m.data;
 
-import com.x0j3m.config.AppInit;
 import com.x0j3m.model.entity.PoliticalPartyEntity;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -19,15 +17,6 @@ public class PoliticalPartyRepository {
 
     @PersistenceContext(unitName = "H2PersistenceUnit")
     private EntityManager entityManager;
-
-    @PostConstruct
-    public void init() {
-        if (getAll().isEmpty()) {
-            for (PoliticalPartyEntity politicalParty : AppInit.INIT_POLITICAL_PARTIES_LIST) {
-                save(politicalParty);
-            }
-        }
-    }
 
     @Transactional
     public List<PoliticalPartyEntity> getAll() {

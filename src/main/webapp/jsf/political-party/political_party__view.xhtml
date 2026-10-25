@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/jsf/template/template.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{politicalPartyJsfElement.id}" required="true"/>
+        <f:viewAction action="#{politicalPartyJsfElement.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <h1>
+            Political party view
+        </h1>
+
+        <header><h2><h:outputText value="#{politicalPartyJsfElement.politicalParty.name}"/></h2></header>
+        <div>
+            <div>
+                <strong>
+                    Name:
+                </strong>
+                <span>
+                        <h:outputText value="#{politicalPartyJsfElement.politicalParty.name}"/>
+                    </span>
+            </div>
+            <div>
+                <strong>
+                    Foundation date:
+                </strong>
+                <span>
+                        <h:outputText value="#{politicalPartyJsfElement.politicalParty.foundationDate}"/>
+                    </span>
+            </div>
+            <div>
+                <strong>
+                    Orientation:
+                </strong>
+                <span>
+                        <h:outputText value="#{politicalPartyJsfElement.politicalParty.orientation}"/>
+                    </span>
+            </div>
+            <div>
+                <strong>
+                    Members:
+                </strong>
+                <span>
+                        <h:outputText value="#{politicalPartyJsfElement.politicians.size()}"/>
+                    </span>
+            </div>
+        </div>
+
+        <h:dataTable id="politicians" value="#{politicalPartyJsfElement.politicians}" var="politician">
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                <h:outputText id="nameValue" value="#{politician.name}">
+                    <f:passThroughAttribute name="data-name" value="${politician.name}"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Surname</f:facet>
+                <h:outputText id="surnameValue" value="#{politician.surname}">
+                    <f:passThroughAttribute name="data-surname" value="${politician.surname}"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Birth date</f:facet>
+                <h:outputText id="birthDateValue" value="#{politician.birthDate}">
+                    <f:passThroughAttribute name="data-birthDate" value="${politician.birthDate}"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Constituency</f:facet>
+                <h:outputText id="constituencyValue" value="#{politician.constituency}">
+                    <f:passThroughAttribute name="data-constituency" value="${politician.constituency}"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">View</f:facet>
+                <h:link id="viewLink" outcome="/jsf/politician/politician__view.xhtml" value="View">
+                    <f:param name="id" value="#{politician.id}"/>
+                </h:link>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Delete</f:facet>
+                <h:form>
+                    <h:commandButton id="deleteButton" styleClass="btn" value="Delete"
+                                     action="#{politicalPartyJsfElement.deletePolitician(politician.id)}"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+
+    </ui:define>
+</ui:composition>

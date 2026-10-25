@@ -10,25 +10,14 @@
         <param-value>resources/img</param-value>
     </context-param>
 
+    <servlet>
+        <servlet-name>facesServlet</servlet-name>
+        <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
+    </servlet>
 
-    <listener>
-        <listener-class>com.x0j3m.config.repository.ImageRepositoryContextListener</listener-class>
-    </listener>
-    
-    <listener>
-        <listener-class>com.x0j3m.config.repository.UserRepositoryContextListener</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>com.x0j3m.config.UserMapperContextListener</listener-class>
-    </listener>
-    
-    <listener>
-        <listener-class>com.x0j3m.config.service.ImageServiceContextListener</listener-class>
-    </listener>
-    
-    <listener>
-        <listener-class>com.x0j3m.config.service.UserServiceContextListener</listener-class>
-    </listener>
+    <servlet-mapping>
+        <servlet-name>facesServlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
 
 </web-app>
