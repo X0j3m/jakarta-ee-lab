@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/jsf/template/template.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{politicalPartyFormJsf.id}" required="false"/>
+        <f:viewAction action="#{politicalPartyFormJsf.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <h1>
+            Political party create
+        </h1>
+
+        <h:form id="characterForm" styleClass="container" enctype="multipart/form-data">
+
+            <div>
+                <div>
+                    <h:outputLabel for="id" value="Id:" disabled="#{politicalPartyFormJsf.exists}"/>
+                    <h:inputText id="id" value="#{politicalPartyFormJsf.politicalParty.id}"
+                                 disabled="#{politicalPartyFormJsf.exists}"/>
+                </div>
+                <div>
+                    <h:outputLabel for="name" value="Name:"/>
+                    <h:inputText id="name" value="#{politicalPartyFormJsf.politicalParty.name}"/>
+                </div>
+                <div>
+                    <h:outputLabel for="foundationDate" value="Foundation date:"/>
+                    <h:inputText id="foundationDate" value="#{politicalPartyFormJsf.politicalParty.foundationDate}"/>
+                </div>
+                <div>
+                    <fieldset>
+                        <legend>Orientation:</legend>
+                        <h:selectOneRadio value="#{politicalPartyFormJsf.politicalParty.orientation}">
+                            <f:selectItems value="#{politicalPartyFormJsf.orientations}" var="orientation"
+                                           itemLabel="#{orientation}" itemValue="#{orientation}"/>
+                        </h:selectOneRadio>
+                    </fieldset>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

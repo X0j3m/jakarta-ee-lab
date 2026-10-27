@@ -1,4 +1,4 @@
-package com.x0j3m.web.jsf;
+package com.x0j3m.web.jsf.ui.politicalParty;
 
 import com.x0j3m.model.dto.politicalParty.PoliticalPartyResponseDto;
 import com.x0j3m.model.dto.politician.PoliticianResponseDto;
@@ -6,8 +6,8 @@ import com.x0j3m.model.entity.PoliticalPartyEntity;
 import com.x0j3m.model.mapper.PoliticalPartyMapper;
 import com.x0j3m.service.PoliticalPartyService;
 import com.x0j3m.service.PoliticianService;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,11 +20,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Named
-@RequestScoped
+@ViewScoped
 public class PoliticalPartyJsfElement implements Serializable {
-    private static class Navigations {
-        public static final String POLITICAL_PARTY = "politicalPartyJsfElement?faces-redirect=true";
-    }
     @Inject
     private PoliticalPartyService politicalPartyService;
     @Inject
@@ -52,8 +49,8 @@ public class PoliticalPartyJsfElement implements Serializable {
         }
     }
 
-    public String deletePolitician(String id){
-        politicianService.deletePoliticianById(UUID.fromString(id));
-        return Navigations.POLITICAL_PARTY;
+    public String deletePolitician(String politicianId) {
+        politicianService.deletePoliticianById(UUID.fromString(politicianId));
+        return "politicalPartyJsfElement?id=" + this.id + "&faces-redirect=true";
     }
 }

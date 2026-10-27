@@ -39,6 +39,11 @@ public class PoliticianService {
         return politicalParty.map(politicianMapper::toDto).orElseThrow();
     }
 
+    public PoliticianEntity fetchByIdEntity(UUID id) {
+        Optional<PoliticianEntity> politicalParty = politicianRepository.getById(id);
+        return politicalParty.orElseThrow();
+    }
+
     public List<PoliticianResponseDto> fetchAllByPartyId(UUID id) {
         return politicianRepository.getAllByPartyId(id)
                 .stream()

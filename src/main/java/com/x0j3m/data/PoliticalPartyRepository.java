@@ -20,7 +20,7 @@ public class PoliticalPartyRepository {
 
     @Transactional
     public List<PoliticalPartyEntity> getAll() {
-        return entityManager.createQuery("SELECT pp FROM PoliticalPartyEntity pp", PoliticalPartyEntity.class).getResultList();
+        return entityManager.createQuery("SELECT pp FROM PoliticalPartyEntity pp ORDER BY pp.name ASC", PoliticalPartyEntity.class).getResultList();
     }
 
     @Transactional

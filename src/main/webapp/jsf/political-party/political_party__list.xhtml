@@ -35,6 +35,12 @@
                     <f:param name="id" value="#{politicalParty.id}"/>
                 </h:link>
             </h:column>
+<!--            <h:column>-->
+<!--                <f:facet name="header">Edit</f:facet>-->
+<!--                <h:link id="editLink" outcome="/jsf/political-party/political_party__create.xhtml" value="Edit">-->
+<!--                    <f:param name="id" value="#{politicalParty.id}"/>-->
+<!--                </h:link>-->
+<!--            </h:column>-->
             <h:column>
                 <f:facet name="header">Delete</f:facet>
                 <h:form>
@@ -43,5 +49,8 @@
                 </h:form>
             </h:column>
         </h:dataTable>
+
+<!--        <h:link id="createLink" outcome="/jsf/political-party/political_party__create.xhtml" value="Create"/>-->
+
     </ui:define>
 </ui:composition>

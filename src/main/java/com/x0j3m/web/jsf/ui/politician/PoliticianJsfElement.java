@@ -1,4 +1,4 @@
-package com.x0j3m.web.jsf;
+package com.x0j3m.web.jsf.ui.politician;
 
 import com.x0j3m.model.dto.politician.PoliticianResponseDto;
 import com.x0j3m.service.PoliticianService;

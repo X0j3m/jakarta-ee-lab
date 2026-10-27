@@ -1,10 +1,7 @@
 package com.x0j3m.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -15,8 +12,10 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PoliticianEntity {
     @Id
+    @EqualsAndHashCode.Include
     private UUID id;
     @Column(name = "name")
     private String name;
