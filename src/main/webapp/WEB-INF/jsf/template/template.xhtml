@@ -7,11 +7,13 @@
       xmlns:f="jakarta.faces.core">
 <f:view>
     <h:head>
+        <h:outputStylesheet library="css" name="index.css"/>
         <meta charset="UTF-8"/>
         <title>Jakarta EE lab</title>
     </h:head>
     <h:body>
         <header>
+            <h:graphicImage styleClass="image" library="img" name="logo.png"/>
             <h1>Jakarta EE Lab</h1>
         </header>
 
@@ -22,7 +24,7 @@
 
             <h:button
                     value="Political Parties"
-                    outcome="/jsf/political-party/political_party__list.xhtml"/>
+                    outcome="/jsf/political_party__list.xhtml"/>
         </nav>
 
         <main>

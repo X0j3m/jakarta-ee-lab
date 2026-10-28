@@ -6,42 +6,36 @@
                 template="/WEB-INF/jsf/template/template.xhtml">
 
     <ui:define name="content">
-        <h1>
+        <h2>
             Political party list
-        </h1>
+        </h2>
 
-        <h:dataTable id="politicalParties" value="#{politicalPartyJsfList.politicalPartyList}" var="politicalParty">
-            <h:column>
+        <h:dataTable styleClass="table" id="politicalParties" value="#{politicalPartyJsfList.politicalPartyList}" var="politicalParty">
+            <h:column styleClass="table" >
                 <f:facet name="header">Name</f:facet>
                 <h:outputText id="nameValue" value="#{politicalParty.name}">
                     <f:passThroughAttribute name="data-name" value="${politicalParty.name}"/>
                 </h:outputText>
             </h:column>
-            <h:column>
+            <h:column styleClass="table" >
                 <f:facet name="header">Foundation date</f:facet>
                 <h:outputText id="foundationDateValue" value="#{politicalParty.foundationDate}">
                     <f:passThroughAttribute name="data-foundationDate" value="${politicalParty.foundationDate}"/>
                 </h:outputText>
             </h:column>
-            <h:column>
+            <h:column styleClass="table" >
                 <f:facet name="header">Orientation</f:facet>
                 <h:outputText id="orientationValue" value="#{politicalParty.orientation}">
                     <f:passThroughAttribute name="data-orientation" value="${politicalParty.orientation}"/>
                 </h:outputText>
             </h:column>
-            <h:column>
+            <h:column styleClass="table" >
                 <f:facet name="header">View</f:facet>
-                <h:link id="viewLink" outcome="/jsf/political-party/political_party__view.xhtml" value="View">
+                <h:link id="viewLink" outcome="/jsf/political_party__view.xhtml" value="View">
                     <f:param name="id" value="#{politicalParty.id}"/>
                 </h:link>
             </h:column>
-<!--            <h:column>-->
-<!--                <f:facet name="header">Edit</f:facet>-->
-<!--                <h:link id="editLink" outcome="/jsf/political-party/political_party__create.xhtml" value="Edit">-->
-<!--                    <f:param name="id" value="#{politicalParty.id}"/>-->
-<!--                </h:link>-->
-<!--            </h:column>-->
-            <h:column>
+            <h:column styleClass="table" >
                 <f:facet name="header">Delete</f:facet>
                 <h:form>
                     <h:commandButton id="deleteButton" styleClass="btn" value="Delete"
@@ -49,8 +43,5 @@
                 </h:form>
             </h:column>
         </h:dataTable>
-
-<!--        <h:link id="createLink" outcome="/jsf/political-party/political_party__create.xhtml" value="Create"/>-->
-
     </ui:define>
 </ui:composition>

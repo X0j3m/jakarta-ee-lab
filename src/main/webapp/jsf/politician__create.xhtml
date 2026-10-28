@@ -11,43 +11,54 @@
     </f:metadata>
 
     <ui:define name="content">
-        <h1>
+        <h2>
             Politician create / edit
-        </h1>
+        </h2>
 
         <h:form id="politicianForm" styleClass="container" enctype="multipart/form-data">
             <div>
                 <h:outputLabel for="id" value="Id:"/>
                 <h:inputText id="id" value="#{politicianFormJsf.politician.id}"
-                             disabled="#{politicianFormJsf.exists}"/>
+                             disabled="#{politicianFormJsf.exists}">
+                    <f:validateRequired/>
+                </h:inputText>
             </div>
             <div>
                 <h:outputLabel for="name" value="Name:"/>
-                <h:inputText id="name" value="#{politicianFormJsf.politician.name}"/>
+                <h:inputText id="name" value="#{politicianFormJsf.politician.name}">
+                    <f:validateRequired/>
+                </h:inputText>
             </div>
             <div>
                 <h:outputLabel for="surname" value="Surname:"/>
-                <h:inputText id="surname" value="#{politicianFormJsf.politician.surname}"/>
+                <h:inputText id="surname" value="#{politicianFormJsf.politician.surname}">
+                    <f:validateRequired/>
+                </h:inputText>
             </div>
             <div>
                 <h:outputLabel for="birthDate" value="Birth date:"/>
                 <h:inputText id="birthDate" value="#{politicianFormJsf.politician.birthDate}">
+                    <f:validateRequired/>
                     <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
                 </h:inputText>
             </div>
             <div>
                 <h:outputLabel for="constituency" value="Constituency:"/>
-                <h:inputText id="constituency" value="#{politicianFormJsf.politician.constituency}"/>
+                <h:inputText id="constituency" value="#{politicianFormJsf.politician.constituency}">
+                    <f:validateRequired/>
+                    <f:validateLongRange minimum="1"/>
+                </h:inputText>
             </div>
             <div>
                 <h:outputLabel for="politicalPartySelect" value="Political party:"/>
 
                 <h:selectOneMenu id="politicalPartySelect" value="#{politicianFormJsf.politician.politicalParty}">
-                    <f:selectItem itemLabel="SELECT" itemValue="#{null}"/>
+                    <f:selectItem itemLabel="Select political party" itemValue="#{null}"/>
                     <f:selectItems value="#{politicianFormJsf.politicalParties}"
                                    var="party"
                                    itemLabel="#{party.name}"
                                    itemValue="#{party}"/>
+                    <f:validateRequired/>
                 </h:selectOneMenu>
             </div>
 

@@ -11,12 +11,20 @@
     </f:metadata>
 
     <ui:define name="content">
-        <h1>
+        <h2>
             Politician view
-        </h1>
+        </h2>
 
         <header><h2><h:outputText value="#{politicianJsfElement.politician.name}"/></h2></header>
         <div>
+            <div>
+                <strong>
+                    ID:
+                </strong>
+                <span>
+                        <h:outputText value="#{politicianJsfElement.politician.id}"/>
+                    </span>
+            </div>
             <div>
                 <strong>
                     Name:

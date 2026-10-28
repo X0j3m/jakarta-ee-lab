@@ -2,7 +2,6 @@ package com.x0j3m.web.jsf.ui.politician;
 
 import com.x0j3m.model.entity.PoliticalPartyEntity;
 import com.x0j3m.model.entity.PoliticianEntity;
-import com.x0j3m.model.mapper.PoliticianMapper;
 import com.x0j3m.service.PoliticalPartyService;
 import com.x0j3m.service.PoliticianService;
 import jakarta.faces.view.ViewScoped;
@@ -11,7 +10,6 @@ import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -40,7 +38,7 @@ public class PoliticianFormJsf implements Serializable {
     @Getter
     private boolean exists;
 
-    public void save() {
+    public String save() {
         if (selectedPartyValue != null && !selectedPartyValue.isBlank()) {
             PoliticalPartyEntity party = politicalPartyService.fetchById(UUID.fromString(selectedPartyValue));
             politician.setPoliticalParty(party);
@@ -48,20 +46,7 @@ public class PoliticianFormJsf implements Serializable {
 
         politicianService.createPolitician(politician);
 
-        var externalContext = jakarta.faces.context.FacesContext.getCurrentInstance().getExternalContext();
-        String contextPath = externalContext.getRequestContextPath();
-
-        String redirectUrl;
-        if (politician.getPoliticalParty() != null) {
-            redirectUrl = contextPath + "/jsf/political-party/political_party__view.xhtml?id=" + politician.getPoliticalParty().getId();
-        } else {
-            redirectUrl = contextPath + "/jsf/political-party/political_party__list.xhtml";
-        }
-
-        try {
-            externalContext.redirect(redirectUrl);
-        } catch (IOException e) {
-        }
+        return "/jsf/political_party__view.xhtml?id=" + politician.getPoliticalParty().getId() + "&faces-redirect=true";
     }
 
     public void init() {

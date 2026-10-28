@@ -73,7 +73,7 @@ public class AppInit {
                     .name("Jan")
                     .surname("Kowalski")
                     .birthDate(LocalDate.of(1982, 3, 15))
-                    .constituency(1)
+                    .constituency(15)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(0))
                     .build(),
             PoliticianEntity.builder()
@@ -89,7 +89,7 @@ public class AppInit {
                     .name("Katarzyna")
                     .surname("Wiśniewska")
                     .birthDate(LocalDate.of(1990, 11, 5))
-                    .constituency(1)
+                    .constituency(9)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(0))
                     .build(),
             PoliticianEntity.builder()
@@ -97,7 +97,7 @@ public class AppInit {
                     .name("Tomasz")
                     .surname("Wójcik")
                     .birthDate(LocalDate.of(1968, 1, 30))
-                    .constituency(1)
+                    .constituency(3)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(0))
                     .build(),
 
@@ -106,7 +106,7 @@ public class AppInit {
                     .name("Michał")
                     .surname("Kamiński")
                     .birthDate(LocalDate.of(1988, 4, 18))
-                    .constituency(2)
+                    .constituency(5)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(1))
                     .build(),
             PoliticianEntity.builder()
@@ -114,7 +114,7 @@ public class AppInit {
                     .name("Anna")
                     .surname("Zielińska")
                     .birthDate(LocalDate.of(1993, 9, 12))
-                    .constituency(2)
+                    .constituency(7)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(1))
                     .build(),
             PoliticianEntity.builder()
@@ -122,7 +122,7 @@ public class AppInit {
                     .name("Krzysztof")
                     .surname("Szymański")
                     .birthDate(LocalDate.of(1979, 6, 25))
-                    .constituency(2)
+                    .constituency(21)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(1))
                     .build(),
             PoliticianEntity.builder()
@@ -139,7 +139,7 @@ public class AppInit {
                     .name("Paweł")
                     .surname("Dąbrowski")
                     .birthDate(LocalDate.of(1972, 8, 14))
-                    .constituency(3)
+                    .constituency(4)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(2))
                     .build(),
             PoliticianEntity.builder()
@@ -147,7 +147,7 @@ public class AppInit {
                     .name("Magdalena")
                     .surname("Kozłowska")
                     .birthDate(LocalDate.of(1991, 2, 28))
-                    .constituency(3)
+                    .constituency(18)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(2))
                     .build(),
             PoliticianEntity.builder()
@@ -155,7 +155,7 @@ public class AppInit {
                     .name("Marcin")
                     .surname("Jankowski")
                     .birthDate(LocalDate.of(1980, 10, 19))
-                    .constituency(3)
+                    .constituency(7)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(2))
                     .build(),
             PoliticianEntity.builder()
@@ -163,7 +163,7 @@ public class AppInit {
                     .name("Monika")
                     .surname("Mazur")
                     .birthDate(LocalDate.of(1987, 5, 8))
-                    .constituency(3)
+                    .constituency(11)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(2))
                     .build(),
 
@@ -172,7 +172,7 @@ public class AppInit {
                     .name("Grzegorz")
                     .surname("Krawczyk")
                     .birthDate(LocalDate.of(1976, 11, 21))
-                    .constituency(4)
+                    .constituency(10)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(3))
                     .build(),
             PoliticianEntity.builder()
@@ -180,7 +180,7 @@ public class AppInit {
                     .name("Ewa")
                     .surname("Piotrowska")
                     .birthDate(LocalDate.of(1984, 7, 9))
-                    .constituency(4)
+                    .constituency(9)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(3))
                     .build(),
             PoliticianEntity.builder()
@@ -188,7 +188,7 @@ public class AppInit {
                     .name("Łukasz")
                     .surname("Grabowski")
                     .birthDate(LocalDate.of(1995, 4, 2))
-                    .constituency(4)
+                    .constituency(18)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(3))
                     .build(),
             PoliticianEntity.builder()
@@ -196,7 +196,7 @@ public class AppInit {
                     .name("Karolina")
                     .surname("Pawłowska")
                     .birthDate(LocalDate.of(1989, 9, 17))
-                    .constituency(4)
+                    .constituency(7)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(3))
                     .build()
     );

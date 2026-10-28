@@ -11,12 +11,20 @@
     </f:metadata>
 
     <ui:define name="content">
-        <h1>
+        <h2>
             Political party view
-        </h1>
+        </h2>
 
         <header><h2><h:outputText value="#{politicalPartyJsfElement.politicalParty.name}"/></h2></header>
         <div>
+            <div>
+                <strong>
+                    ID:
+                </strong>
+                <span>
+                        <h:outputText value="#{politicalPartyJsfElement.politicalParty.id}"/>
+                    </span>
+            </div>
             <div>
                 <strong>
                     Name:
@@ -51,44 +59,44 @@
             </div>
         </div>
 
-        <h:dataTable id="politicians" value="#{politicalPartyJsfElement.politicians}" var="politician">
-            <h:column>
+        <h:dataTable styleClass="table"  id="politicians" value="#{politicalPartyJsfElement.politicians}" var="politician">
+            <h:column styleClass="table">
                 <f:facet name="header">Name</f:facet>
                 <h:outputText id="nameValue" value="#{politician.name}">
                     <f:passThroughAttribute name="data-name" value="${politician.name}"/>
                 </h:outputText>
             </h:column>
-            <h:column>
+            <h:column styleClass="table">
                 <f:facet name="header">Surname</f:facet>
                 <h:outputText id="surnameValue" value="#{politician.surname}">
                     <f:passThroughAttribute name="data-surname" value="${politician.surname}"/>
                 </h:outputText>
             </h:column>
-            <h:column>
+            <h:column styleClass="table">
                 <f:facet name="header">Birth date</f:facet>
                 <h:outputText id="birthDateValue" value="#{politician.birthDate}">
                     <f:passThroughAttribute name="data-birthDate" value="${politician.birthDate}"/>
                 </h:outputText>
             </h:column>
-            <h:column>
+            <h:column styleClass="table">
                 <f:facet name="header">Constituency</f:facet>
                 <h:outputText id="constituencyValue" value="#{politician.constituency}">
                     <f:passThroughAttribute name="data-constituency" value="${politician.constituency}"/>
                 </h:outputText>
             </h:column>
-            <h:column>
+            <h:column styleClass="table">
                 <f:facet name="header">View</f:facet>
-                <h:link id="viewLink" outcome="/jsf/politician/politician__view.xhtml" value="View">
+                <h:link id="viewLink" outcome="/jsf/politician__view.xhtml" value="View">
                     <f:param name="id" value="#{politician.id}"/>
                 </h:link>
             </h:column>
-            <h:column>
+            <h:column styleClass="table">
                 <f:facet name="header">Edit</f:facet>
-                <h:link id="editLink" outcome="/jsf/politician/politician__create.xhtml" value="Edit">
+                <h:link id="editLink" outcome="/jsf/politician__create.xhtml" value="Edit">
                     <f:param name="id" value="#{politician.id}"/>
                 </h:link>
             </h:column>
-            <h:column>
+            <h:column styleClass="table">
                 <f:facet name="header">Delete</f:facet>
                 <h:form>
                     <h:commandButton id="deleteButton" styleClass="btn" value="Delete"
@@ -97,7 +105,7 @@
             </h:column>
         </h:dataTable>
 
-        <h:link id="createLink" outcome="/jsf/politician/politician__create.xhtml" value="Create"/>
+        <h:link id="createLink" outcome="/jsf/politician__create.xhtml" value="Create"/>
 
     </ui:define>
 </ui:composition>

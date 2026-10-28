@@ -1,0 +1,16 @@
+body{
+    font-family: Arial;
+}
+
+h1{
+    color: #4580ff;
+}
+
+.image{
+    width: 150px;
+}
+
+.table{
+    border: 1px solid black;
+    text-align: center;
+}

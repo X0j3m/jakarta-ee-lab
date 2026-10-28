@@ -51,6 +51,6 @@ public class PoliticalPartyJsfElement implements Serializable {
 
     public String deletePolitician(String politicianId) {
         politicianService.deletePoliticianById(UUID.fromString(politicianId));
-        return "politicalPartyJsfElement?id=" + this.id + "&faces-redirect=true";
+        return "/jsf/political_party__view.xhtml?id=" + this.id + "&faces-redirect=true";
     }
 }
