@@ -1,5 +1,6 @@
 package com.x0j3m.data;
 
+import com.x0j3m.model.entity.PoliticalPartyEntity;
 import com.x0j3m.model.entity.PoliticianEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
@@ -36,6 +37,16 @@ public class PoliticianRepository {
     @Transactional
     public Optional<PoliticianEntity> getById(UUID id) {
         return Optional.ofNullable(entityManager.find(PoliticianEntity.class, id));
+    }
+
+    @Transactional
+    public boolean belongsToPoliticalParty(UUID id, UUID politicalPartyId) {
+        try {
+            PoliticianEntity politician = entityManager.find(PoliticianEntity.class, id);
+            return politician.getPoliticalParty().getId().equals(politicalPartyId);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Transactional

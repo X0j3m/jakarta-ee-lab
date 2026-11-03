@@ -1,0 +1,85 @@
+@serverUrl = http://localhost:9080
+@servletApi = jakarta-ee-lab/api/servlet
+@restApi = jakarta-ee-lab/api/rest
+@testPoliticalPartyId = AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA
+@testCreatePoliticalPartyId = 99999999-9999-9999-9999-999999999999
+@testPoliticianId = 11111111-aaaa-1111-aaaa-111111111111
+@testCreatePoliticianId = 99999999-FFFF-9999-FFFF-999999999999
+
+### Get all political parties
+
+GET {{serverUrl}}/{{restApi}}/political-parties
+
+### Get single political party
+
+GET {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}
+
+### Create political party
+
+POST {{serverUrl}}/{{restApi}}/political-parties
+Content-Type: application/json
+
+{
+  "name": "New Political Party",
+  "foundationDate": "2000-01-01",
+  "orientation": "CENTER"
+}
+
+### Update/create political party
+
+PUT {{serverUrl}}/{{restApi}}/political-parties/{{testCreatePoliticalPartyId}}
+Content-Type: application/json
+
+{
+  "name": "Test Political Party",
+  "foundationDate": "1999-11-11",
+  "orientation": "CENTER"
+}
+
+### Delete political party
+
+DELETE {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}
+
+### Delete created political party
+
+DELETE {{serverUrl}}/{{restApi}}/political-parties/{{testCreatePoliticalPartyId}}
+
+### Get all politicians for test party
+
+GET {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politicians
+
+### Get single politician
+
+GET {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politicians/{{testPoliticianId}}
+
+### Get single created politician
+
+GET {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politicians/{{testCreatePoliticianId}}
+
+### Create politician
+
+POST {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politicians
+Content-Type: application/json
+
+{
+  "name": "Imie",
+  "surname": "Nazwisko",
+  "birthDate": "1999-11-11",
+  "constituency": 10
+}
+
+### Update/create politician
+
+PUT {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politicians/{{testCreatePoliticianId}}
+Content-Type: application/json
+
+{
+  "name": "Imie",
+  "surname": "Nazwisko",
+  "birthDate": "1999-11-11",
+  "constituency": 10
+}
+
+### Delete politician
+
+DELETE {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politicians/{{testCreatePoliticianId}}

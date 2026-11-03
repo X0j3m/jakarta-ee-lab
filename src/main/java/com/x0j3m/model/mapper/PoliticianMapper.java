@@ -13,14 +13,14 @@ import java.util.UUID;
 @ApplicationScoped
 @NoArgsConstructor
 public class PoliticianMapper {
-    public PoliticianEntity toEntity(UUID id, PoliticianRequestDto politicianDto) {
+    public PoliticianEntity toEntity(UUID id, UUID politicalPartyId, PoliticianRequestDto politicianDto) {
         return PoliticianEntity.builder()
                 .id(id)
                 .name(politicianDto.name())
                 .surname(politicianDto.surname())
                 .birthDate(LocalDate.parse(politicianDto.birthDate()))
                 .constituency(Integer.parseInt(politicianDto.constituency()))
-                .politicalParty(PoliticalPartyEntity.builder().id(UUID.fromString(politicianDto.politicalParty().id())).build())
+                .politicalParty(PoliticalPartyEntity.builder().id(politicalPartyId).build())
                 .build();
     }
 

@@ -15,6 +15,7 @@
 
     <dataSource id="h2DataSource" jndiName="jdbc/h2" jdbcDriverRef="h2Driver">
         <properties URL="jdbc:h2:file:C:/temp/jakarta-ee-lab;AUTO_SERVER=TRUE" user="sa" password=""/>
+<!--        <properties URL="jdbc:h2:mem:jakarta-ee-lab;DB_CLOSE_DELAY=-1" user="sa" password=""/>-->
     </dataSource>
 
     <!-- This template enables security. To get the full use of all the capabilities, a keystore and user registry are required. -->

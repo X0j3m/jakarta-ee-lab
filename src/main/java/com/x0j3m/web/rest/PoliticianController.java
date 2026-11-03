@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
-@Path("politicians")
+@Path("political-parties/{politicalPartyId}/politicians")
 @Produces(MediaType.APPLICATION_JSON)
 @NoArgsConstructor
 @Transactional
@@ -25,15 +25,23 @@ public class PoliticianController {
     private PoliticianMapper politicianMapper;
 
     @GET
-    public List<PoliticianResponseDto> fetchAll() {
-        return politicianService.fetchAll();
+    public List<PoliticianResponseDto> fetchAll(
+            @PathParam("politicalPartyId") String politicalPartyId
+    ) {
+        return politicianService.fetchAllByPartyId(UUID.fromString(politicalPartyId));
     }
 
     @GET
     @Path("{id}")
-    public PoliticianResponseDto fetchById(@PathParam("id") String id) {
+    public PoliticianResponseDto fetchById(
+            @PathParam("politicalPartyId") String politicalPartyId,
+            @PathParam("id") String id) {
         try {
-            return politicianService.fetchById(UUID.fromString(id));
+            if (politicianService.belongsToPoliticalParty(UUID.fromString(id), UUID.fromString(politicalPartyId))) {
+                return politicianService.fetchById(UUID.fromString(id));
+            } else {
+                throw new NotFoundException();
+            }
         } catch (Exception e) {
             throw new NotFoundException();
         }
@@ -41,22 +49,43 @@ public class PoliticianController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public String create(PoliticianRequestDto politicianRequestDto) {
-        PoliticianEntity entity = politicianMapper.toEntity(UUID.randomUUID(), politicianRequestDto);
+    public String create(
+            @PathParam("politicalPartyId") String politicalPartyId,
+            PoliticianRequestDto politicianRequestDto) {
+        PoliticianEntity entity = politicianMapper.toEntity(
+                UUID.randomUUID(),
+                UUID.fromString(politicalPartyId),
+                politicianRequestDto
+        );
+
         return politicianService.createPolitician(entity);
     }
 
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String update(@PathParam("id") String id, PoliticianRequestDto politicianRequestDto) {
-        PoliticianEntity entity = politicianMapper.toEntity(UUID.fromString(id), politicianRequestDto);
+    public String update(
+            @PathParam("politicalPartyId") String politicalPartyId,
+            @PathParam("id") String id,
+            PoliticianRequestDto politicianRequestDto) {
+        PoliticianEntity entity = politicianMapper.toEntity(
+                UUID.fromString(id),
+                UUID.fromString(politicalPartyId),
+                politicianRequestDto
+        );
+
         return politicianService.createPolitician(entity);
     }
 
     @DELETE
     @Path("/{id}")
-    public void deleteById(@PathParam("id") String id) {
-        politicianService.deletePoliticianById(UUID.fromString(id));
+    public void deleteById(
+            @PathParam("politicalPartyId") String politicalPartyId,
+            @PathParam("id") String id) {
+        if (politicianService.belongsToPoliticalParty(UUID.fromString(id), UUID.fromString(politicalPartyId))) {
+            politicianService.deletePoliticianById(UUID.fromString(id));
+        } else {
+            throw new NotFoundException();
+        }
     }
 }

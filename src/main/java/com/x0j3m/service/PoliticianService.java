@@ -9,6 +9,7 @@ import com.x0j3m.model.mapper.PoliticalPartyMapper;
 import com.x0j3m.model.mapper.PoliticianMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -35,13 +36,13 @@ public class PoliticianService {
     }
 
     public PoliticianResponseDto fetchById(UUID id) {
-        Optional<PoliticianEntity> politicalParty = politicianRepository.getById(id);
-        return politicalParty.map(politicianMapper::toDto).orElseThrow();
+        Optional<PoliticianEntity> politician = politicianRepository.getById(id);
+        return politician.map(politicianMapper::toDto).orElseThrow();
     }
 
     public PoliticianEntity fetchByIdEntity(UUID id) {
-        Optional<PoliticianEntity> politicalParty = politicianRepository.getById(id);
-        return politicalParty.orElseThrow();
+        Optional<PoliticianEntity> politician = politicianRepository.getById(id);
+        return politician.orElseThrow();
     }
 
     public List<PoliticianResponseDto> fetchAllByPartyId(UUID id) {
@@ -58,6 +59,10 @@ public class PoliticianService {
 
     public void deletePoliticianById(UUID id) {
         politicianRepository.delete(id);
+    }
+
+    public boolean belongsToPoliticalParty(UUID id, UUID politicalPartyId) {
+        return politicianRepository.belongsToPoliticalParty(id, politicalPartyId);
     }
 
     public boolean existsById(UUID id) {
