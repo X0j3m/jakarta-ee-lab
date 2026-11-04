@@ -34,7 +34,9 @@ public class PoliticalPartyService {
     }
 
     public void deletePoliticalPartyById(UUID id) {
-        politicalPartyRepository.delete(id);
+        if (existsById(id)) {
+            politicalPartyRepository.delete(id);
+        }
     }
 
     public boolean existsById(UUID id) {

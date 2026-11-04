@@ -6,6 +6,8 @@
 @testPoliticianId = 11111111-aaaa-1111-aaaa-111111111111
 @testCreatePoliticianId = 99999999-FFFF-9999-FFFF-999999999999
 
+
+
 ### Get all political parties
 
 GET {{serverUrl}}/{{restApi}}/political-parties
@@ -14,13 +16,17 @@ GET {{serverUrl}}/{{restApi}}/political-parties
 
 GET {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}
 
+### Get created political party
+
+GET {{serverUrl}}/{{restApi}}/political-parties/{{testCreatePoliticalPartyId}}
+
 ### Create political party
 
 POST {{serverUrl}}/{{restApi}}/political-parties
 Content-Type: application/json
 
 {
-  "name": "New Political Party",
+  "name": "Nowa partia",
   "foundationDate": "2000-01-01",
   "orientation": "CENTER"
 }
@@ -31,7 +37,7 @@ PUT {{serverUrl}}/{{restApi}}/political-parties/{{testCreatePoliticalPartyId}}
 Content-Type: application/json
 
 {
-  "name": "Test Political Party",
+  "name": "Testowa partia123",
   "foundationDate": "1999-11-11",
   "orientation": "CENTER"
 }
@@ -43,6 +49,8 @@ DELETE {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}
 ### Delete created political party
 
 DELETE {{serverUrl}}/{{restApi}}/political-parties/{{testCreatePoliticalPartyId}}
+
+
 
 ### Get all politicians for test party
 
@@ -62,8 +70,8 @@ POST {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politi
 Content-Type: application/json
 
 {
-  "name": "Imie",
-  "surname": "Nazwisko",
+  "name": "Nowy",
+  "surname": "Polityk",
   "birthDate": "1999-11-11",
   "constituency": 10
 }
@@ -74,12 +82,16 @@ PUT {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politic
 Content-Type: application/json
 
 {
-  "name": "Imie",
-  "surname": "Nazwisko",
+  "name": "Testowy123",
+  "surname": "Polityk",
   "birthDate": "1999-11-11",
   "constituency": 10
 }
 
 ### Delete politician
+
+DELETE {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politicians/{{testPoliticianId}}
+
+### Delete created politician
 
 DELETE {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politicians/{{testCreatePoliticianId}}
