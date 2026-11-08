@@ -21,23 +21,17 @@ import java.util.UUID;
 public class PoliticianService {
     @Inject
     private PoliticianRepository politicianRepository;
-    @Inject
-    private PoliticalPartyService politicalPartyService;
-    @Inject
-    private PoliticianMapper politicianMapper;
-    @Inject
-    private PoliticalPartyMapper politicalPartyMapper;
 
     public List<PoliticianResponseDto> fetchAll() {
         return politicianRepository.getAll()
                 .stream()
-                .map(politicianMapper::toDto)
+                .map(PoliticianMapper::toDto)
                 .toList();
     }
 
     public PoliticianResponseDto fetchById(UUID id) {
         Optional<PoliticianEntity> politician = politicianRepository.getById(id);
-        return politician.map(politicianMapper::toDto).orElseThrow();
+        return politician.map(PoliticianMapper::toDto).orElseThrow();
     }
 
     public PoliticianEntity fetchByIdEntity(UUID id) {
@@ -48,7 +42,7 @@ public class PoliticianService {
     public List<PoliticianResponseDto> fetchAllByPartyId(UUID id) {
         return politicianRepository.getAllByPartyId(id)
                 .stream()
-                .map(politicianMapper::toDto)
+                .map(PoliticianMapper::toDto)
                 .toList();
     }
 

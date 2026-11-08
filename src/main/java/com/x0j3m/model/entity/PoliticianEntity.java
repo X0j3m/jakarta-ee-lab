@@ -8,12 +8,14 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "politicians")
-@Data
 @Builder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PoliticianEntity {
+
     @Id
     @EqualsAndHashCode.Include
     private UUID id;
@@ -25,10 +27,23 @@ public class PoliticianEntity {
     private LocalDate birthDate;
     @Column(name = "constituency")
     private int constituency;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "political_party_id")
     private PoliticalPartyEntity politicalParty;
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private UserEntity user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    @Override
+    public String toString() {
+        return "PoliticianEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", constituency=" + constituency +
+                ", politicalPartyId=" + (politicalParty != null ? politicalParty.getId() : null) +
+                ", userId=" + (user != null ? user.getId() : null) +
+                '}';
+    }
 }

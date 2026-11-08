@@ -1,4 +1,4 @@
-package com.x0j3m.service;
+    package com.x0j3m.service;
 
 import com.x0j3m.data.PoliticalPartyRepository;
 import com.x0j3m.model.dto.politicalParty.PoliticalPartyRequestDto;

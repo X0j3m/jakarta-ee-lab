@@ -9,5 +9,6 @@ public record PoliticianResponseDto(
         String surname,
         String birthDate,
         String constituency,
-        String politicalParty
+        String politicalParty,
+        String user
 ) {}

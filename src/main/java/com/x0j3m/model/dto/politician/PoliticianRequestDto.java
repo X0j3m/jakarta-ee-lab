@@ -4,5 +4,6 @@ public record PoliticianRequestDto(
         String name,
         String surname,
         String birthDate,
-        String constituency
+        String constituency,
+        String userId
 ) {}

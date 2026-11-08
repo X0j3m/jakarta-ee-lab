@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@WebServlet("/api/servlet/users/*")
+@WebServlet(urlPatterns = {"/api/servlet/users", "/api/servlet/users/*"})
 public class UserServlet extends HttpServlet {
     private final UserService userService;
     private final ImageService imageService;

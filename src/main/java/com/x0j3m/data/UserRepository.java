@@ -20,7 +20,7 @@ public class UserRepository {
 
     @Transactional
     public List<UserEntity> getAll() {
-        return entityManager.createQuery("SELECT u FROM UserEntity u", UserEntity.class).getResultList();
+        return entityManager.createQuery("SELECT DISTINCT u FROM UserEntity u LEFT JOIN FETCH u.politicians", UserEntity.class).getResultList();
     }
 
     @Transactional

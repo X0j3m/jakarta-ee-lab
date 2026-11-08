@@ -21,14 +21,12 @@ public class PoliticalPartyJsfList implements Serializable {
 
     @Inject
     private PoliticalPartyService politicalPartyService;
-    @Inject
-    private PoliticalPartyMapper politicalPartyMapper;
 
     private List<PoliticalPartyResponseDto> politicalPartyList;
 
     public List<PoliticalPartyResponseDto> getPoliticalPartyList() {
         List<PoliticalPartyEntity> politicalPartyEntityList = politicalPartyService.fetchAll();
-        politicalPartyList = politicalPartyEntityList.stream().map(politicalPartyMapper::toDto).toList();
+        politicalPartyList = politicalPartyEntityList.stream().map(PoliticalPartyMapper::toDto).toList();
         return politicalPartyList;
     }
 

@@ -10,10 +10,16 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 @Singleton
 @Startup
 public class DbInitializer {
+    @PersistenceContext(unitName = "H2PersistenceUnit")
+    private EntityManager entityManager;
+
     @Inject
     private PoliticalPartyRepository politicalPartyRepository;
     @Inject
@@ -22,23 +28,31 @@ public class DbInitializer {
     private UserRepository userRepository;
 
     @PostConstruct
+    @Transactional
     public void init() {
-        if (politicalPartyRepository.getAll().isEmpty()) {
+        boolean usersEmpty = userRepository.getAll().isEmpty();
+        boolean partiesEmpty = politicalPartyRepository.getAll().isEmpty();
+        boolean politiciansEmpty = politicianRepository.getAll().isEmpty();
+
+        if (usersEmpty) {
+            for (UserEntity user : AppInit.INIT_USERS_LIST) {
+                userRepository.save(user);
+            }
+        }
+
+        if (partiesEmpty) {
             for (PoliticalPartyEntity politicalParty : AppInit.INIT_POLITICAL_PARTIES_LIST) {
                 politicalPartyRepository.save(politicalParty);
             }
         }
 
-        if (politicianRepository.getAll().isEmpty()) {
+        if (politiciansEmpty) {
             for (PoliticianEntity politician : AppInit.INIT_POLITICALIANS_LIST) {
                 politicianRepository.save(politician);
             }
         }
 
-        if (userRepository.getAll().isEmpty()) {
-            for (UserEntity user : AppInit.INIT_USERS_LIST) {
-                userRepository.save(user);
-            }
-        }
+        entityManager.flush();
+        entityManager.clear();
     }
 }

@@ -4,16 +4,12 @@ import com.x0j3m.model.dto.politicalParty.PoliticalPartyRequestDto;
 import com.x0j3m.model.dto.politicalParty.PoliticalPartyResponseDto;
 import com.x0j3m.model.entity.Orientation;
 import com.x0j3m.model.entity.PoliticalPartyEntity;
-import jakarta.enterprise.context.ApplicationScoped;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@ApplicationScoped
-@NoArgsConstructor
 public class PoliticalPartyMapper {
-    public PoliticalPartyEntity toEntity(UUID id, PoliticalPartyRequestDto politicalPartyDto) {
+    public static PoliticalPartyEntity toEntity(UUID id, PoliticalPartyRequestDto politicalPartyDto) {
         return PoliticalPartyEntity.builder()
                 .id(id)
                 .name(politicalPartyDto.name())
@@ -22,7 +18,7 @@ public class PoliticalPartyMapper {
                 .build();
     }
 
-    public PoliticalPartyResponseDto toDto(PoliticalPartyEntity politicalPartyEntity) {
+    public static PoliticalPartyResponseDto toDto(PoliticalPartyEntity politicalPartyEntity) {
         return PoliticalPartyResponseDto.builder()
                 .id(politicalPartyEntity.getId().toString())
                 .name(politicalPartyEntity.getName())
@@ -30,6 +26,7 @@ public class PoliticalPartyMapper {
                 .orientation(politicalPartyEntity.getOrientation().toString().substring(0, 1).toUpperCase()
                         +
                         politicalPartyEntity.getOrientation().toString().substring(1).toLowerCase())
+                .politicians(politicalPartyEntity.getPoliticians().stream().map(PoliticianMapper::toDto).toList())
                 .build();
     }
 }

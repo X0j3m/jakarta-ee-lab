@@ -21,13 +21,11 @@ import java.util.UUID;
 public class PoliticalPartyController {
     @Inject
     private PoliticalPartyService politicalPartyService;
-    @Inject
-    private PoliticalPartyMapper politicalPartyMapper;
 
     @GET
     public List<PoliticalPartyResponseDto> fetchAll() {
         return politicalPartyService.fetchAll().stream()
-                .map(politicalPartyMapper::toDto)
+                .map(PoliticalPartyMapper::toDto)
                 .toList();
     }
 
@@ -36,7 +34,7 @@ public class PoliticalPartyController {
     public PoliticalPartyResponseDto fetchById(@PathParam("id") String id) {
         try {
             PoliticalPartyEntity entity = politicalPartyService.fetchById(UUID.fromString(id));
-            return politicalPartyMapper.toDto(entity);
+            return PoliticalPartyMapper.toDto(entity);
         } catch (Exception e) {
             throw new NotFoundException();
         }
@@ -45,7 +43,7 @@ public class PoliticalPartyController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public String create(PoliticalPartyRequestDto politicalPartyRequestDto) {
-        PoliticalPartyEntity entity = politicalPartyMapper.toEntity(UUID.randomUUID(), politicalPartyRequestDto);
+        PoliticalPartyEntity entity = PoliticalPartyMapper.toEntity(UUID.randomUUID(), politicalPartyRequestDto);
         return politicalPartyService.createPoliticalParty(entity);
     }
 
@@ -53,7 +51,7 @@ public class PoliticalPartyController {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public String update(@PathParam("id") String id, PoliticalPartyRequestDto politicalPartyRequestDto) {
-        PoliticalPartyEntity entity = politicalPartyMapper.toEntity(UUID.fromString(id), politicalPartyRequestDto);
+        PoliticalPartyEntity entity = PoliticalPartyMapper.toEntity(UUID.fromString(id), politicalPartyRequestDto);
         return politicalPartyService.createPoliticalParty(entity);
     }
 

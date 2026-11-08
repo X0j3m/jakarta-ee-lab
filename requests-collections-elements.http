@@ -5,7 +5,7 @@
 @testCreatePoliticalPartyId = 99999999-9999-9999-9999-999999999999
 @testPoliticianId = 11111111-aaaa-1111-aaaa-111111111111
 @testCreatePoliticianId = 99999999-FFFF-9999-FFFF-999999999999
-
+@userId = "11111111-2222-3333-4444-555555555555"
 
 
 ### Get all political parties
@@ -73,7 +73,8 @@ Content-Type: application/json
   "name": "Nowy",
   "surname": "Polityk",
   "birthDate": "1999-11-11",
-  "constituency": 10
+  "constituency": 10,
+  "userId": "{{userId}}"
 }
 
 ### Update/create politician
@@ -85,7 +86,8 @@ Content-Type: application/json
   "name": "Testowy123",
   "surname": "Polityk",
   "birthDate": "1999-11-11",
-  "constituency": 10
+  "constituency": 10,
+  "userId": "11111111-2222-3333-4444-555555555555"
 }
 
 ### Delete politician

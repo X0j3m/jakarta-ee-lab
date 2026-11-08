@@ -18,30 +18,30 @@ import java.util.UUID;
 public class UserService {
     @Inject
     private UserRepository userRepository;
-    @Inject
-    private UserMapper userMapper;
 
     public List<UserResponseDto> fetchAll() {
-        return userRepository.getAll()
+        var queryResult = userRepository.getAll();
+
+        return queryResult
                 .stream()
-                .map(userMapper::toDto)
+                .map(UserMapper::toDto)
                 .toList();
 
     }
 
     public UserResponseDto fetchUserById(UUID id) {
         Optional<UserEntity> user = userRepository.getById(id);
-        return user.map(userMapper::toDto).orElseThrow();
+        return user.map(UserMapper::toDto).orElseThrow();
     }
 
     public String createUser(UserRequestDto userDto) {
-        UserEntity user = userMapper.toEntity(UUID.randomUUID(), userDto);
+        UserEntity user = UserMapper.toEntity(UUID.randomUUID(), userDto);
         userRepository.save(user);
         return user.getId().toString();
     }
 
     public void updateUserById(UUID id, UserRequestDto userDto) {
-        UserEntity updatedUser = userMapper.toEntity(id, userDto);
+        UserEntity updatedUser = UserMapper.toEntity(id, userDto);
         userRepository.save(updatedUser);
     }
 

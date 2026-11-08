@@ -21,8 +21,6 @@ import java.util.UUID;
 public class PoliticianController {
     @Inject
     private PoliticianService politicianService;
-    @Inject
-    private PoliticianMapper politicianMapper;
 
     @GET
     public List<PoliticianResponseDto> fetchAll(
@@ -52,7 +50,7 @@ public class PoliticianController {
     public String create(
             @PathParam("politicalPartyId") String politicalPartyId,
             PoliticianRequestDto politicianRequestDto) {
-        PoliticianEntity entity = politicianMapper.toEntity(
+        PoliticianEntity entity = PoliticianMapper.toEntity(
                 UUID.randomUUID(),
                 UUID.fromString(politicalPartyId),
                 politicianRequestDto
@@ -68,7 +66,7 @@ public class PoliticianController {
             @PathParam("politicalPartyId") String politicalPartyId,
             @PathParam("id") String id,
             PoliticianRequestDto politicianRequestDto) {
-        PoliticianEntity entity = politicianMapper.toEntity(
+        PoliticianEntity entity = PoliticianMapper.toEntity(
                 UUID.fromString(id),
                 UUID.fromString(politicalPartyId),
                 politicianRequestDto

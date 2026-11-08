@@ -26,8 +26,6 @@ public class PoliticalPartyJsfElement implements Serializable {
     private PoliticalPartyService politicalPartyService;
     @Inject
     private PoliticianService politicianService;
-    @Inject
-    private PoliticalPartyMapper politicalPartyMapper;
 
     @Getter
     @Setter
@@ -40,7 +38,7 @@ public class PoliticalPartyJsfElement implements Serializable {
     public void init() throws IOException {
         try {
             PoliticalPartyEntity politicalPartyEntity = politicalPartyService.fetchById(UUID.fromString(id));
-            politicalParty = politicalPartyMapper.toDto(politicalPartyEntity);
+            politicalParty = PoliticalPartyMapper.toDto(politicalPartyEntity);
             politicians = politicianService.fetchAllByPartyId(UUID.fromString(id));
         }catch (Exception e){
             FacesContext.getCurrentInstance()

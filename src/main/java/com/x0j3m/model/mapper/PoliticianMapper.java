@@ -4,16 +4,13 @@ import com.x0j3m.model.dto.politician.PoliticianRequestDto;
 import com.x0j3m.model.dto.politician.PoliticianResponseDto;
 import com.x0j3m.model.entity.PoliticalPartyEntity;
 import com.x0j3m.model.entity.PoliticianEntity;
-import jakarta.enterprise.context.ApplicationScoped;
-import lombok.NoArgsConstructor;
+import com.x0j3m.model.entity.UserEntity;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@ApplicationScoped
-@NoArgsConstructor
 public class PoliticianMapper {
-    public PoliticianEntity toEntity(UUID id, UUID politicalPartyId, PoliticianRequestDto politicianDto) {
+    public static PoliticianEntity toEntity(UUID id, UUID politicalPartyId, PoliticianRequestDto politicianDto) {
         return PoliticianEntity.builder()
                 .id(id)
                 .name(politicianDto.name())
@@ -21,10 +18,11 @@ public class PoliticianMapper {
                 .birthDate(LocalDate.parse(politicianDto.birthDate()))
                 .constituency(Integer.parseInt(politicianDto.constituency()))
                 .politicalParty(PoliticalPartyEntity.builder().id(politicalPartyId).build())
+                .user(UserEntity.builder().id(UUID.fromString(politicianDto.userId())).build())
                 .build();
     }
 
-    public PoliticianResponseDto toDto(PoliticianEntity politicianEntity) {
+    public static PoliticianResponseDto toDto(PoliticianEntity politicianEntity) {
         return PoliticianResponseDto.builder()
                 .id(String.valueOf(politicianEntity.getId()))
                 .name(politicianEntity.getName())
@@ -32,6 +30,7 @@ public class PoliticianMapper {
                 .birthDate(String.valueOf(politicianEntity.getBirthDate()))
                 .constituency(String.valueOf(politicianEntity.getConstituency()))
                 .politicalParty(String.valueOf(politicianEntity.getPoliticalParty().getId()))
+                .user(String.valueOf(politicianEntity.getUser().getId()))
                 .build();
     }
 }
