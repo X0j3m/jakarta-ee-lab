@@ -54,12 +54,12 @@
                     Members:
                 </strong>
                 <span>
-                        <h:outputText value="#{politicalPartyJsfElement.politicians.size()}"/>
+                        <h:outputText value="#{politicalPartyJsfElement.politicalParty.politicians.size()}"/>
                     </span>
             </div>
         </div>
 
-        <h:dataTable styleClass="table"  id="politicians" value="#{politicalPartyJsfElement.politicians}" var="politician">
+        <h:dataTable styleClass="table"  id="politicians" value="#{politicalPartyJsfElement.politicalParty.politicians}" var="politician">
             <h:column styleClass="table">
                 <f:facet name="header">Name</f:facet>
                 <h:outputText id="nameValue" value="#{politician.name}">

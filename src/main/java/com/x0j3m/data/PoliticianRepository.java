@@ -20,7 +20,7 @@ public class PoliticianRepository {
 
     @Transactional
     public List<PoliticianEntity> getAll() {
-        return entityManager.createQuery("SELECT p FROM PoliticianEntity p ORDER BY p.name", PoliticianEntity.class).getResultList();
+        return entityManager.createQuery("SELECT p FROM PoliticianEntity p ORDER BY p.id", PoliticianEntity.class).getResultList();
     }
 
     @Transactional

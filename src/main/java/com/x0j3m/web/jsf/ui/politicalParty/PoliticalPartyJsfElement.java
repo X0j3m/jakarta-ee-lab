@@ -32,14 +32,14 @@ public class PoliticalPartyJsfElement implements Serializable {
     private String id;
     @Getter
     private PoliticalPartyResponseDto politicalParty;
-    @Getter
-    private List<PoliticianResponseDto> politicians;
+//    @Getter
+//    private List<PoliticianResponseDto> politicians;
 
     public void init() throws IOException {
         try {
             PoliticalPartyEntity politicalPartyEntity = politicalPartyService.fetchById(UUID.fromString(id));
             politicalParty = PoliticalPartyMapper.toDto(politicalPartyEntity);
-            politicians = politicianService.fetchAllByPartyId(UUID.fromString(id));
+//            politicians = politicianService.fetchAllByPartyId(UUID.fromString(id));
         }catch (Exception e){
             FacesContext.getCurrentInstance()
                     .getExternalContext()

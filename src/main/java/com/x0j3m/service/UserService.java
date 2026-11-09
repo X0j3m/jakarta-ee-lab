@@ -7,6 +7,7 @@ import com.x0j3m.model.entity.UserEntity;
 import com.x0j3m.model.mapper.UserMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -26,12 +27,24 @@ public class UserService {
                 .stream()
                 .map(UserMapper::toDto)
                 .toList();
+    }
 
+    public List<UserEntity> fetchAllEntities() {
+        return userRepository.getAll();
     }
 
     public UserResponseDto fetchUserById(UUID id) {
         Optional<UserEntity> user = userRepository.getById(id);
         return user.map(UserMapper::toDto).orElseThrow();
+    }
+
+    public UserEntity fetchUserEntityById(UUID id) {
+        Optional<UserEntity> user = userRepository.getById(id);
+        if(user.isPresent()) {
+            return user.get();
+        }else{
+            throw new NotFoundException();
+        }
     }
 
     public String createUser(UserRequestDto userDto) {

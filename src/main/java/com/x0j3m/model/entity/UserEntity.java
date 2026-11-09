@@ -29,7 +29,7 @@ public class UserEntity {
     @Column(name = "role")
     private Role role;
     @Builder.Default
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<PoliticianEntity> politicians = new ArrayList<>();
 
     @Override

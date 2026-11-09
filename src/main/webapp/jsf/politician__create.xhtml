@@ -61,6 +61,18 @@
                     <f:validateRequired/>
                 </h:selectOneMenu>
             </div>
+            <div>
+                <h:outputLabel for="userSelect" value="User:"/>
+
+                <h:selectOneMenu id="userSelect" value="#{politicianFormJsf.politician.user}">
+                    <f:selectItem itemLabel="Select user" itemValue="#{null}"/>
+                    <f:selectItems value="#{politicianFormJsf.users}"
+                                   var="user"
+                                   itemLabel="#{user.username}"
+                                   itemValue="#{user}"/>
+                    <f:validateRequired/>
+                </h:selectOneMenu>
+            </div>
 
             <h:commandButton value="Save" action="#{politicianFormJsf.save}"/>
         </h:form>

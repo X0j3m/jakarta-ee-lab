@@ -1,9 +1,12 @@
 package com.x0j3m.web.jsf.ui.politician;
 
+import com.x0j3m.model.dto.user.UserResponseDto;
 import com.x0j3m.model.entity.PoliticalPartyEntity;
 import com.x0j3m.model.entity.PoliticianEntity;
+import com.x0j3m.model.entity.UserEntity;
 import com.x0j3m.service.PoliticalPartyService;
 import com.x0j3m.service.PoliticianService;
+import com.x0j3m.service.UserService;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -21,6 +24,8 @@ public class PoliticianFormJsf implements Serializable {
     private PoliticianService politicianService;
     @Inject
     private PoliticalPartyService politicalPartyService;
+    @Inject
+    private UserService userService;
 
     @Getter
     @Setter
@@ -31,17 +36,32 @@ public class PoliticianFormJsf implements Serializable {
 
     @Getter
     private List<PoliticalPartyEntity> politicalParties;
+
+    @Getter
+    private List<UserEntity> users;
+
     @Getter
     @Setter
     private String selectedPartyValue;
+    @Getter
+    @Setter
+    private String selectedUserValue;
 
     @Getter
     private boolean exists;
 
     public String save() {
-        if (selectedPartyValue != null && !selectedPartyValue.isBlank()) {
+        if (selectedPartyValue != null
+                &&
+                !selectedPartyValue.isBlank()
+                &&
+                selectedUserValue != null
+                &&
+                !selectedUserValue.isBlank()) {
             PoliticalPartyEntity party = politicalPartyService.fetchById(UUID.fromString(selectedPartyValue));
+            UserEntity user = userService.fetchUserEntityById(UUID.fromString(selectedUserValue));
             politician.setPoliticalParty(party);
+            politician.setUser(user);
         }
 
         politicianService.createPolitician(politician);
@@ -61,5 +81,6 @@ public class PoliticianFormJsf implements Serializable {
         }
 
         politicalParties = politicalPartyService.fetchAll();
+        users = userService.fetchAllEntities();
     }
 }

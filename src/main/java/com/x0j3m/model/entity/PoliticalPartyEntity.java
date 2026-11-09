@@ -29,7 +29,7 @@ public class PoliticalPartyEntity {
     @Column(name = "orientation")
     private Orientation orientation;
     @Builder.Default
-    @OneToMany(mappedBy = "politicalParty", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "politicalParty", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<PoliticianEntity> politicians = new ArrayList<>();
 
     @Override

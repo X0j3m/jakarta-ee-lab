@@ -12,6 +12,10 @@ GET {{serverUrl}}/{{servletApi}}/users
 
 GET {{serverUrl}}/{{servletApi}}/users/{{testUserId}}
 
+### Get created user
+
+GET {{serverUrl}}/{{servletApi}}/users/11111111-1111-1111-1111-111111111111
+
 ### Create user
 
 POST {{serverUrl}}/{{servletApi}}/users
