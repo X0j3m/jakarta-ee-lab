@@ -1,14 +1,14 @@
 package com.x0j3m.service;
 
 import com.x0j3m.data.PoliticianRepository;
-import com.x0j3m.model.dto.politician.PoliticianRequestDto;
 import com.x0j3m.model.dto.politician.PoliticianResponseDto;
-import com.x0j3m.model.entity.PoliticalPartyEntity;
 import com.x0j3m.model.entity.PoliticianEntity;
-import com.x0j3m.model.mapper.PoliticalPartyMapper;
 import com.x0j3m.model.mapper.PoliticianMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.security.enterprise.AuthenticationException;
+import jakarta.security.enterprise.SecurityContext;
+import jakarta.ws.rs.ForbiddenException;
 import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 
@@ -16,11 +16,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.x0j3m.security.PermissionsChecker.checkIsAdmin;
+import static com.x0j3m.security.PermissionsChecker.checkIsAdminOrOwner;
+
 @ApplicationScoped
 @NoArgsConstructor
 public class PoliticianService {
     @Inject
     private PoliticianRepository politicianRepository;
+    @Inject
+    private SecurityContext securityContext;
 
     public List<PoliticianResponseDto> fetchAll() {
         return politicianRepository.getAll()
@@ -31,7 +36,14 @@ public class PoliticianService {
 
     public PoliticianResponseDto fetchById(UUID id) {
         Optional<PoliticianEntity> politician = politicianRepository.getById(id);
-        return politician.map(PoliticianMapper::toDto).orElseThrow();
+        if (politician.isPresent()) {
+            String ownerName = politician.get().getUser().getUsername();
+            if (checkIsAdminOrOwner(securityContext, ownerName)) {
+                return politician.map(PoliticianMapper::toDto).orElseThrow();
+            }
+            throw new NotFoundException();
+        }
+        throw new NotFoundException();
     }
 
     public PoliticianEntity fetchByIdEntity(UUID id) {
@@ -40,23 +52,47 @@ public class PoliticianService {
     }
 
     public List<PoliticianResponseDto> fetchAllByPartyId(UUID id) {
-        return politicianRepository.getAllByPartyId(id)
+        if (checkIsAdmin(securityContext)) {
+            return politicianRepository.getAllByPartyId(id)
+                    .stream()
+                    .map(PoliticianMapper::toDto)
+                    .toList();
+        }
+        return politicianRepository.getAllByPartyIdAndUsername(id, securityContext.getCallerPrincipal().getName())
                 .stream()
                 .map(PoliticianMapper::toDto)
                 .toList();
     }
 
-    public String createPolitician(PoliticianEntity politicianEntity) {
-        politicianRepository.save(politicianEntity);
-        return politicianEntity.getId().toString();
+    public String createPolitician(PoliticianEntity politicianEntity){
+        if (checkIsAdminOrOwner(securityContext, politicianEntity.getUser().getUsername())) {
+            politicianRepository.save(politicianEntity);
+            return politicianEntity.getId().toString();
+        } else {
+            throw new NotFoundException();
+        }
     }
 
     public void deletePoliticianById(UUID id) {
-        politicianRepository.delete(id);
+        if (existsById(id)) {
+            if (checkIsAdminOrOwner(securityContext, getOwner(id))) {
+                politicianRepository.delete(id);
+            }
+        }
     }
 
     public boolean belongsToPoliticalParty(UUID id, UUID politicalPartyId) {
         return politicianRepository.belongsToPoliticalParty(id, politicalPartyId);
+    }
+
+    private String getOwner(UUID id) {
+        Optional<PoliticianEntity> politician = politicianRepository.getById(id);
+        return politician.map(politicianEntity -> politicianEntity.getUser().getUsername()).orElse(null);
+    }
+
+    public UUID getOwnerId(UUID id) {
+        Optional<PoliticianEntity> politician = politicianRepository.getById(id);
+        return politician.map(politicianEntity -> politicianEntity.getUser().getId()).orElse(null);
     }
 
     public boolean existsById(UUID id) {

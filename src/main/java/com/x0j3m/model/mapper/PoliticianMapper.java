@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class PoliticianMapper {
-    public static PoliticianEntity toEntity(UUID id, UUID politicalPartyId, PoliticianRequestDto politicianDto) {
+    public static PoliticianEntity toEntity(UUID id, UUID politicalPartyId, UUID userId, PoliticianRequestDto politicianDto) {
         return PoliticianEntity.builder()
                 .id(id)
                 .name(politicianDto.name())
@@ -18,7 +18,7 @@ public class PoliticianMapper {
                 .birthDate(LocalDate.parse(politicianDto.birthDate()))
                 .constituency(Integer.parseInt(politicianDto.constituency()))
                 .politicalParty(PoliticalPartyEntity.builder().id(politicalPartyId).build())
-                .user(UserEntity.builder().id(UUID.fromString(politicianDto.userId())).build())
+                .user(UserEntity.builder().id(userId).build())
                 .build();
     }
 

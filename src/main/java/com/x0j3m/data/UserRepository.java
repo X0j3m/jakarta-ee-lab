@@ -29,6 +29,13 @@ public class UserRepository {
     }
 
     @Transactional
+    public Optional<UserEntity> getByUsername(String username) {
+        return entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.username = :username", UserEntity.class)
+                .setParameter("username", username)
+                .getResultList().stream().findFirst();
+    }
+
+    @Transactional
     public void save(UserEntity user) {
         if (entityManager.find(UserEntity.class, user.getId()) == null) {
             entityManager.persist(user);

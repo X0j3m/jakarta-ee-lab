@@ -11,7 +11,7 @@
 ### Get all political parties
 
 GET {{serverUrl}}/{{restApi}}/political-parties
-Authorization: Bearer {{$auth.token("admin-auth")}}
+Authorization: Bearer {{$auth.token("jakarta-ee-lab-auth")}}
 
 ### Get single political party
 
@@ -59,7 +59,9 @@ GET {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politic
 
 ### Get single politician
 
+# @no-cookie-jar
 GET {{serverUrl}}/{{restApi}}/political-parties/{{testPoliticalPartyId}}/politicians/{{testPoliticianId}}
+Authorization: Bearer {{$auth.token("jakarta-ee-lab-auth")}}
 
 ### Get single created politician
 

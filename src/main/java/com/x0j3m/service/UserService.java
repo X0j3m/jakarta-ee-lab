@@ -38,6 +38,11 @@ public class UserService {
         return user.map(UserMapper::toDto).orElseThrow();
     }
 
+    public UserResponseDto fetchUserByUsername(String username) {
+        Optional<UserEntity> user = userRepository.getByUsername(username);
+        return user.map(UserMapper::toDto).orElseThrow();
+    }
+
     public UserEntity fetchUserEntityById(UUID id) {
         Optional<UserEntity> user = userRepository.getById(id);
         if(user.isPresent()) {

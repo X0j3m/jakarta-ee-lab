@@ -34,6 +34,17 @@ public class PoliticianRepository {
     }
 
     @Transactional
+    public List<PoliticianEntity> getAllByPartyIdAndUsername(UUID partyId, String username) {
+        return entityManager.createQuery(
+                        "SELECT p FROM PoliticianEntity p WHERE p.politicalParty.id = :partyId AND p.user.username = :username",
+                        PoliticianEntity.class
+                )
+                .setParameter("partyId", partyId)
+                .setParameter("username", username)
+                .getResultList();
+    }
+
+    @Transactional
     public Optional<PoliticianEntity> getById(UUID id) {
         return Optional.ofNullable(entityManager.find(PoliticianEntity.class, id));
     }

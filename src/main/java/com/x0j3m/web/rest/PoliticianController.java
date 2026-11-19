@@ -2,10 +2,14 @@ package com.x0j3m.web.rest;
 
 import com.x0j3m.model.dto.politician.PoliticianRequestDto;
 import com.x0j3m.model.dto.politician.PoliticianResponseDto;
+import com.x0j3m.model.dto.user.UserResponseDto;
 import com.x0j3m.model.entity.PoliticianEntity;
 import com.x0j3m.model.mapper.PoliticianMapper;
 import com.x0j3m.service.PoliticianService;
+import com.x0j3m.service.UserService;
 import jakarta.inject.Inject;
+import jakarta.security.enterprise.AuthenticationException;
+import jakarta.security.enterprise.SecurityContext;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -21,6 +25,10 @@ import java.util.UUID;
 public class PoliticianController {
     @Inject
     private PoliticianService politicianService;
+    @Inject
+    private UserService userService;
+    @Inject
+    private SecurityContext securityContext;
 
     @GET
     public List<PoliticianResponseDto> fetchAll(
@@ -50,9 +58,12 @@ public class PoliticianController {
     public String create(
             @PathParam("politicalPartyId") String politicalPartyId,
             PoliticianRequestDto politicianRequestDto) {
+        UserResponseDto userDto = userService.fetchUserByUsername(securityContext.getCallerPrincipal().getName());
+
         PoliticianEntity entity = PoliticianMapper.toEntity(
                 UUID.randomUUID(),
                 UUID.fromString(politicalPartyId),
+                UUID.fromString(userDto.id()),
                 politicianRequestDto
         );
 
@@ -66,9 +77,12 @@ public class PoliticianController {
             @PathParam("politicalPartyId") String politicalPartyId,
             @PathParam("id") String id,
             PoliticianRequestDto politicianRequestDto) {
+        UUID ownerId = politicianService.getOwnerId(UUID.fromString(id));
+
         PoliticianEntity entity = PoliticianMapper.toEntity(
                 UUID.fromString(id),
                 UUID.fromString(politicalPartyId),
+                ownerId,
                 politicianRequestDto
         );
 

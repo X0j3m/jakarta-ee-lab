@@ -18,6 +18,10 @@
 <!--        <properties URL="jdbc:h2:mem:jakarta-ee-lab;DB_CLOSE_DELAY=-1" user="sa" password=""/>-->
     </dataSource>
 
+    <mpJwt id="defaultMpJwt"
+           issuer="http://localhost:9000"
+           jwksUri="http://localhost:9000/oauth2/jwks" />
+
     <!-- This template enables security. To get the full use of all the capabilities, a keystore and user registry are required. -->
 
     <!-- For the keystore, default keys are generated and stored in a keystore. To provide the keystore password, generate an 

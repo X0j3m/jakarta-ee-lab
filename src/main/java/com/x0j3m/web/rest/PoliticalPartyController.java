@@ -5,6 +5,7 @@ import com.x0j3m.model.dto.politicalParty.PoliticalPartyResponseDto;
 import com.x0j3m.model.entity.PoliticalPartyEntity;
 import com.x0j3m.model.mapper.PoliticalPartyMapper;
 import com.x0j3m.service.PoliticalPartyService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -23,6 +24,7 @@ public class PoliticalPartyController {
     private PoliticalPartyService politicalPartyService;
 
     @GET
+    @RolesAllowed({"admin", "user"})
     public List<PoliticalPartyResponseDto> fetchAll() {
         return politicalPartyService.fetchAll().stream()
                 .map(PoliticalPartyMapper::toDto)
@@ -31,6 +33,7 @@ public class PoliticalPartyController {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"admin", "user"})
     public PoliticalPartyResponseDto fetchById(@PathParam("id") String id) {
         try {
             PoliticalPartyEntity entity = politicalPartyService.fetchById(UUID.fromString(id));
@@ -42,6 +45,7 @@ public class PoliticalPartyController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"admin"})
     public String create(PoliticalPartyRequestDto politicalPartyRequestDto) {
         PoliticalPartyEntity entity = PoliticalPartyMapper.toEntity(UUID.randomUUID(), politicalPartyRequestDto);
         return politicalPartyService.createPoliticalParty(entity);
@@ -50,6 +54,7 @@ public class PoliticalPartyController {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"admin"})
     public String update(@PathParam("id") String id, PoliticalPartyRequestDto politicalPartyRequestDto) {
         PoliticalPartyEntity entity = PoliticalPartyMapper.toEntity(UUID.fromString(id), politicalPartyRequestDto);
         return politicalPartyService.createPoliticalParty(entity);
@@ -57,6 +62,7 @@ public class PoliticalPartyController {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"admin"})
     public void deleteById(@PathParam("id") String id) {
         politicalPartyService.deletePoliticalPartyById(UUID.fromString(id));
     }

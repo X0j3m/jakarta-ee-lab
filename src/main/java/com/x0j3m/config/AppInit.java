@@ -11,35 +11,35 @@ public class AppInit {
             UserEntity.builder()
                     .id(UUID.fromString("11111111-2222-3333-4444-555555555555"))
                     .username("admin")
-                    .password("hasloadmin")
+                    .password("haslo")
                     .birthDate(LocalDate.of(2000, 12, 12))
                     .role(Role.ADMIN)
                     .build(),
             UserEntity.builder()
                     .id(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                     .username("user1")
-                    .password("haslouser1")
+                    .password("haslo")
                     .birthDate(LocalDate.of(2001, 1, 1))
                     .role(Role.USER)
                     .build(),
             UserEntity.builder()
                     .id(UUID.fromString("22222222-2222-2222-2222-222222222222"))
                     .username("user2")
-                    .password("haslouser2")
+                    .password("haslo")
                     .birthDate(LocalDate.of(2002, 2, 2))
                     .role(Role.USER)
                     .build(),
             UserEntity.builder()
                     .id(UUID.fromString("33333333-3333-3333-3333-333333333333"))
                     .username("user3")
-                    .password("haslouser3")
+                    .password("haslo")
                     .birthDate(LocalDate.of(2003, 3, 3))
                     .role(Role.USER)
                     .build(),
             UserEntity.builder()
                     .id(UUID.fromString("44444444-4444-4444-4444-444444444444"))
                     .username("user4")
-                    .password("haslouser4")
+                    .password("haslo")
                     .birthDate(LocalDate.of(2004, 4, 4))
                     .role(Role.USER)
                     .build()
@@ -89,7 +89,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1975, 7, 22))
                     .constituency(1)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(0))
-                    .user(INIT_USERS_LIST.get(1))
+                    .user(INIT_USERS_LIST.get(2))
                     .build(),
             PoliticianEntity.builder()
                     .id(UUID.fromString("11111111-AAAA-1111-AAAA-333333333333"))
@@ -98,7 +98,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1990, 11, 5))
                     .constituency(9)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(0))
-                    .user(INIT_USERS_LIST.get(1))
+                    .user(INIT_USERS_LIST.get(3))
                     .build(),
             PoliticianEntity.builder()
                     .id(UUID.fromString("11111111-AAAA-1111-AAAA-444444444444"))
@@ -107,7 +107,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1968, 1, 30))
                     .constituency(3)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(0))
-                    .user(INIT_USERS_LIST.get(1))
+                    .user(INIT_USERS_LIST.get(4))
                     .build(),
 
             PoliticianEntity.builder()
@@ -117,7 +117,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1988, 4, 18))
                     .constituency(5)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(1))
-                    .user(INIT_USERS_LIST.get(2))
+                    .user(INIT_USERS_LIST.get(1))
                     .build(),
             PoliticianEntity.builder()
                     .id(UUID.fromString("22222222-BBBB-2222-BBBB-333333333333"))
@@ -135,7 +135,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1979, 6, 25))
                     .constituency(21)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(1))
-                    .user(INIT_USERS_LIST.get(2))
+                    .user(INIT_USERS_LIST.get(3))
                     .build(),
             PoliticianEntity.builder()
                     .id(UUID.fromString("22222222-BBBB-2222-BBBB-555555555555"))
@@ -144,7 +144,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1985, 12, 3))
                     .constituency(2)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(1))
-                    .user(INIT_USERS_LIST.get(2))
+                    .user(INIT_USERS_LIST.get(4))
                     .build(),
 
             PoliticianEntity.builder()
@@ -154,7 +154,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1972, 8, 14))
                     .constituency(4)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(2))
-                    .user(INIT_USERS_LIST.get(3))
+                    .user(INIT_USERS_LIST.get(1))
                     .build(),
             PoliticianEntity.builder()
                     .id(UUID.fromString("33333333-CCCC-3333-CCCC-444444444444"))
@@ -163,7 +163,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1991, 2, 28))
                     .constituency(18)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(2))
-                    .user(INIT_USERS_LIST.get(3))
+                    .user(INIT_USERS_LIST.get(2))
                     .build(),
             PoliticianEntity.builder()
                     .id(UUID.fromString("33333333-CCCC-3333-CCCC-555555555555"))
@@ -181,7 +181,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1987, 5, 8))
                     .constituency(11)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(2))
-                    .user(INIT_USERS_LIST.get(3))
+                    .user(INIT_USERS_LIST.get(4))
                     .build(),
 
             PoliticianEntity.builder()
@@ -191,7 +191,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1976, 11, 21))
                     .constituency(10)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(3))
-                    .user(INIT_USERS_LIST.get(4))
+                    .user(INIT_USERS_LIST.get(1))
                     .build(),
             PoliticianEntity.builder()
                     .id(UUID.fromString("44444444-DDDD-4444-DDDD-555555555555"))
@@ -200,7 +200,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1984, 7, 9))
                     .constituency(9)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(3))
-                    .user(INIT_USERS_LIST.get(4))
+                    .user(INIT_USERS_LIST.get(2))
                     .build(),
             PoliticianEntity.builder()
                     .id(UUID.fromString("44444444-DDDD-4444-DDDD-666666666666"))
@@ -209,7 +209,7 @@ public class AppInit {
                     .birthDate(LocalDate.of(1995, 4, 2))
                     .constituency(18)
                     .politicalParty(INIT_POLITICAL_PARTIES_LIST.get(3))
-                    .user(INIT_USERS_LIST.get(4))
+                    .user(INIT_USERS_LIST.get(3))
                     .build(),
             PoliticianEntity.builder()
                     .id(UUID.fromString("44444444-DDDD-4444-DDDD-777777777777"))

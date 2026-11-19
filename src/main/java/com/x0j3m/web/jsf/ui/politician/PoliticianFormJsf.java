@@ -64,7 +64,9 @@ public class PoliticianFormJsf implements Serializable {
             politician.setUser(user);
         }
 
-        politicianService.createPolitician(politician);
+        try {
+            politicianService.createPolitician(politician);
+        }catch (Exception ignored){}
 
         return "/jsf/political_party__view.xhtml?id=" + politician.getPoliticalParty().getId() + "&faces-redirect=true";
     }

@@ -13,6 +13,7 @@ public class UserMapper {
         return UserEntity.builder()
                 .id(id)
                 .username(userDto.username())
+                .password(userDto.password())
                 .birthDate(LocalDate.parse(userDto.birthDate()))
                 .role(Role.valueOf(userDto.role()))
                 .build();

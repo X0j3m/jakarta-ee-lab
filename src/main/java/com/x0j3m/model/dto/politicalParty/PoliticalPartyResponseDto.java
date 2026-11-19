@@ -10,6 +10,6 @@ public record PoliticalPartyResponseDto(
         String id,
         String name,
         String foundationDate,
-        String orientation,
-        List<PoliticianResponseDto> politicians
+        String orientation
+//        List<PoliticianResponseDto> politicians
 ) {}
