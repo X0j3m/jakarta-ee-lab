@@ -21,8 +21,10 @@ public class UserEntity {
     @Id
     @EqualsAndHashCode.Include
     private UUID id;
-    @Column(name = "username")
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
+    @Column(name = "password", nullable = false)
+    private String password;
     @Column(name = "birth_date")
     private LocalDate birthDate;
     @Enumerated(EnumType.STRING)

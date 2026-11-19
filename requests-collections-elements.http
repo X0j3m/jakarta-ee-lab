@@ -11,6 +11,7 @@
 ### Get all political parties
 
 GET {{serverUrl}}/{{restApi}}/political-parties
+Authorization: Bearer {{$auth.token("admin-auth")}}
 
 ### Get single political party
 
