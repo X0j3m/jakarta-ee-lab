@@ -39,6 +39,8 @@ public class PoliticalPartyJsfElement implements Serializable {
         try {
             PoliticalPartyEntity politicalPartyEntity = politicalPartyService.fetchById(UUID.fromString(id));
             politicalParty = PoliticalPartyMapper.toDto(politicalPartyEntity);
+
+
 //            politicians = politicianService.fetchAllByPartyId(UUID.fromString(id));
         }catch (Exception e){
             FacesContext.getCurrentInstance()
