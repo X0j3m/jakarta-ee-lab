@@ -12,48 +12,48 @@
 
     <ui:define name="content">
         <h2>
-            Politician create / edit
+            #{msg['politician.form.title']}
         </h2>
 
         <h:form id="politicianForm" styleClass="container" enctype="multipart/form-data">
             <div>
-                <h:outputLabel for="id" value="Id:"/>
+                <h:outputLabel for="id" value="#{msg['party.id']}:"/>
                 <h:inputText id="id" value="#{politicianFormJsf.politician.id}"
                              disabled="#{politicianFormJsf.exists}">
                     <f:validateRequired/>
                 </h:inputText>
             </div>
             <div>
-                <h:outputLabel for="name" value="Name:"/>
+                <h:outputLabel for="name" value="#{msg['politician.name']}:"/>
                 <h:inputText id="name" value="#{politicianFormJsf.politician.name}">
                     <f:validateRequired/>
                 </h:inputText>
             </div>
             <div>
-                <h:outputLabel for="surname" value="Surname:"/>
+                <h:outputLabel for="surname" value="#{msg['politician.surname']}:"/>
                 <h:inputText id="surname" value="#{politicianFormJsf.politician.surname}">
                     <f:validateRequired/>
                 </h:inputText>
             </div>
             <div>
-                <h:outputLabel for="birthDate" value="Birth date:"/>
+                <h:outputLabel for="birthDate" value="#{msg['politician.birthDate']}:"/>
                 <h:inputText id="birthDate" value="#{politicianFormJsf.politician.birthDate}">
                     <f:validateRequired/>
                     <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
                 </h:inputText>
             </div>
             <div>
-                <h:outputLabel for="constituency" value="Constituency:"/>
+                <h:outputLabel for="constituency" value="#{msg['politician.constituency']}:"/>
                 <h:inputText id="constituency" value="#{politicianFormJsf.politician.constituency}">
                     <f:validateRequired/>
                     <f:validateLongRange minimum="1"/>
                 </h:inputText>
             </div>
             <div>
-                <h:outputLabel for="politicalPartySelect" value="Political party:"/>
+                <h:outputLabel for="politicalPartySelect" value="#{msg['politician.party']}:"/>
 
                 <h:selectOneMenu id="politicalPartySelect" value="#{politicianFormJsf.politician.politicalParty}">
-                    <f:selectItem itemLabel="Select political party" itemValue="#{null}"/>
+                    <f:selectItem itemLabel="#{msg['politician.selectParty']}" itemValue="#{null}"/>
                     <f:selectItems value="#{politicianFormJsf.politicalParties}"
                                    var="party"
                                    itemLabel="#{party.name}"
@@ -61,20 +61,19 @@
                     <f:validateRequired/>
                 </h:selectOneMenu>
             </div>
-            <div>
-                <h:outputLabel for="userSelect" value="User:"/>
-
-                <h:selectOneMenu id="userSelect" value="#{politicianFormJsf.politician.user}">
-                    <f:selectItem itemLabel="Select user" itemValue="#{null}"/>
+            <h:panelGroup layout="block" rendered="#{politicianFormJsf.canEditOwner()}">
+                <h:outputLabel for="userSelect" value="#{msg['politician.owner']}:"/>
+                <h:selectOneMenu id="userSelect" value="#{politicianFormJsf.selectedUserId}">
+                    <f:selectItem itemLabel="#{msg['politician.selectUser']}" itemValue="#{null}"/>
                     <f:selectItems value="#{politicianFormJsf.users}"
                                    var="user"
                                    itemLabel="#{user.username}"
-                                   itemValue="#{user}"/>
+                                   itemValue="#{user.id}"/>
                     <f:validateRequired/>
                 </h:selectOneMenu>
-            </div>
+            </h:panelGroup>
 
-            <h:commandButton value="Save" action="#{politicianFormJsf.save}"/>
+            <h:commandButton value="#{msg['common.save']}" action="#{politicianFormJsf.save}"/>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -12,58 +12,58 @@
 
     <ui:define name="content">
         <h2>
-            Politician view
+            #{msg['politician.view.title']}
         </h2>
 
         <header><h2><h:outputText value="#{politicianJsfElement.politician.name}"/></h2></header>
         <div>
             <div>
                 <strong>
-                    ID:
+                    #{msg['party.id']}:
                 </strong>
                 <span>
-                        <h:outputText value="#{politicianJsfElement.politician.id}"/>
-                    </span>
+                    <h:outputText value="#{politicianJsfElement.politician.id}"/>
+                </span>
             </div>
             <div>
                 <strong>
-                    Name:
+                    #{msg['politician.name']}:
                 </strong>
                 <span>
-                        <h:outputText value="#{politicianJsfElement.politician.name}"/>
-                    </span>
+                    <h:outputText value="#{politicianJsfElement.politician.name}"/>
+                </span>
             </div>
             <div>
                 <strong>
-                    Surname:
+                    #{msg['politician.surname']}:
                 </strong>
                 <span>
-                        <h:outputText value="#{politicianJsfElement.politician.surname}"/>
-                    </span>
+                    <h:outputText value="#{politicianJsfElement.politician.surname}"/>
+                </span>
             </div>
             <div>
                 <strong>
-                    Birth date:
+                    #{msg['politician.birthDate']}:
                 </strong>
                 <span>
-                        <h:outputText value="#{politicianJsfElement.politician.birthDate}"/>
-                    </span>
+                    <h:outputText value="#{politicianJsfElement.politician.birthDate}"/>
+                </span>
             </div>
             <div>
                 <strong>
-                    Constituency:
+                    #{msg['politician.constituency']}:
                 </strong>
                 <span>
-                        <h:outputText value="#{politicianJsfElement.politician.constituency}"/>
-                    </span>
+                    <h:outputText value="#{politicianJsfElement.politician.constituency}"/>
+                </span>
             </div>
             <div>
                 <strong>
-                    User ID:
+                    #{msg['politician.userId']}:
                 </strong>
                 <span>
-                        <h:outputText value="#{politicianJsfElement.politician.user}"/>
-                    </span>
+                    <h:outputText value="#{politicianJsfElement.politician.user}"/>
+                </span>
             </div>
         </div>
     </ui:define>

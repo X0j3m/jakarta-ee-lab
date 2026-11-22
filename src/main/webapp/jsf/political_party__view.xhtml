@@ -12,100 +12,103 @@
 
     <ui:define name="content">
         <h2>
-            Political party view
+            #{msg['party.view.title']}
         </h2>
 
         <header><h2><h:outputText value="#{politicalPartyJsfElement.politicalParty.name}"/></h2></header>
-        <div>
+
+        <h:form id="partyViewForm">
             <div>
-                <strong>
-                    ID:
-                </strong>
-                <span>
+                <div>
+                    <strong>
+                        #{msg['party.id']}:
+                    </strong>
+                    <span>
                         <h:outputText value="#{politicalPartyJsfElement.politicalParty.id}"/>
                     </span>
-            </div>
-            <div>
-                <strong>
-                    Name:
-                </strong>
-                <span>
+                </div>
+                <div>
+                    <strong>
+                        #{msg['party.name']}:
+                    </strong>
+                    <span>
                         <h:outputText value="#{politicalPartyJsfElement.politicalParty.name}"/>
                     </span>
-            </div>
-            <div>
-                <strong>
-                    Foundation date:
-                </strong>
-                <span>
+                </div>
+                <div>
+                    <strong>
+                        #{msg['party.foundationDate']}:
+                    </strong>
+                    <span>
                         <h:outputText value="#{politicalPartyJsfElement.politicalParty.foundationDate}"/>
                     </span>
-            </div>
-            <div>
-                <strong>
-                    Orientation:
-                </strong>
-                <span>
+                </div>
+                <div>
+                    <strong>
+                        #{msg['party.orientation']}:
+                    </strong>
+                    <span>
                         <h:outputText value="#{politicalPartyJsfElement.politicalParty.orientation}"/>
                     </span>
-            </div>
-            <div>
-                <strong>
-                    Members:
-                </strong>
-                <span>
+                </div>
+                <div>
+                    <strong>
+                        #{msg['party.members']}:
+                    </strong>
+                    <span>
                         <h:outputText value="#{politicalPartyJsfElement.politicalParty.politicians.size()}"/>
                     </span>
+                </div>
             </div>
-        </div>
 
-        <h:dataTable styleClass="table"  id="politicians" value="#{politicalPartyJsfElement.politicalParty.politicians}" var="politician">
-            <h:column styleClass="table">
-                <f:facet name="header">Name</f:facet>
-                <h:outputText id="nameValue" value="#{politician.name}">
-                    <f:passThroughAttribute name="data-name" value="${politician.name}"/>
-                </h:outputText>
-            </h:column>
-            <h:column styleClass="table">
-                <f:facet name="header">Surname</f:facet>
-                <h:outputText id="surnameValue" value="#{politician.surname}">
-                    <f:passThroughAttribute name="data-surname" value="${politician.surname}"/>
-                </h:outputText>
-            </h:column>
-            <h:column styleClass="table">
-                <f:facet name="header">Birth date</f:facet>
-                <h:outputText id="birthDateValue" value="#{politician.birthDate}">
-                    <f:passThroughAttribute name="data-birthDate" value="${politician.birthDate}"/>
-                </h:outputText>
-            </h:column>
-            <h:column styleClass="table">
-                <f:facet name="header">Constituency</f:facet>
-                <h:outputText id="constituencyValue" value="#{politician.constituency}">
-                    <f:passThroughAttribute name="data-constituency" value="${politician.constituency}"/>
-                </h:outputText>
-            </h:column>
-            <h:column styleClass="table">
-                <f:facet name="header">View</f:facet>
-                <h:link id="viewLink" outcome="/jsf/politician__view.xhtml" value="View">
-                    <f:param name="id" value="#{politician.id}"/>
-                </h:link>
-            </h:column>
-            <h:column styleClass="table">
-                <f:facet name="header">Edit</f:facet>
-                <h:link id="editLink" outcome="/jsf/politician__create.xhtml" value="Edit">
-                    <f:param name="id" value="#{politician.id}"/>
-                </h:link>
-            </h:column>
-            <h:column styleClass="table">
-                <f:facet name="header">Delete</f:facet>
-                <h:form>
-                    <h:commandButton id="deleteButton" styleClass="btn" value="Delete"
-                                     action="#{politicalPartyJsfElement.deletePolitician(politician.id)}"/>
-                </h:form>
-            </h:column>
-        </h:dataTable>
+            <h:dataTable styleClass="table" id="politicians" value="#{politicalPartyJsfElement.politicalParty.politicians}" var="politician">
+                <h:column styleClass="table">
+                    <f:facet name="header">#{msg['politician.name']}</f:facet>
+                    <h:outputText id="nameValue" value="#{politician.name}">
+                        <f:passThroughAttribute name="data-name" value="#{politician.name}"/>
+                    </h:outputText>
+                </h:column>
+                <h:column styleClass="table">
+                    <f:facet name="header">#{msg['politician.surname']}</f:facet>
+                    <h:outputText id="surnameValue" value="#{politician.surname}">
+                        <f:passThroughAttribute name="data-surname" value="#{politician.surname}"/>
+                    </h:outputText>
+                </h:column>
+                <h:column styleClass="table">
+                    <f:facet name="header">#{msg['politician.birthDate']}</f:facet>
+                    <h:outputText id="birthDateValue" value="#{politician.birthDate}">
+                        <f:passThroughAttribute name="data-birthDate" value="#{politician.birthDate}"/>
+                    </h:outputText>
+                </h:column>
+                <h:column styleClass="table">
+                    <f:facet name="header">#{msg['politician.constituency']}</f:facet>
+                    <h:outputText id="constituencyValue" value="#{politician.constituency}">
+                        <f:passThroughAttribute name="data-constituency" value="#{politician.constituency}"/>
+                    </h:outputText>
+                </h:column>
+                <h:column styleClass="table">
+                    <f:facet name="header">#{msg['common.view']}</f:facet>
+                    <h:link id="viewLink" outcome="/jsf/politician__view.xhtml" value="#{msg['common.view']}">
+                        <f:param name="id" value="#{politician.id}"/>
+                    </h:link>
+                </h:column>
+                <h:column styleClass="table">
+                    <f:facet name="header">#{msg['common.edit']}</f:facet>
+                    <h:link id="editLink" outcome="/jsf/politician__create.xhtml" value="#{msg['common.edit']}">
+                        <f:param name="id" value="#{politician.id}"/>
+                    </h:link>
+                </h:column>
+                <h:column styleClass="table">
+                    <f:facet name="header">#{msg['common.delete']}</f:facet>
+                    <h:commandButton id="deleteButton" styleClass="btn" value="#{msg['common.delete']}"
+                                     action="#{politicalPartyJsfElement.deletePolitician(politician.id)}">
+                        <f:ajax execute="@this" render="@form"/>
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+        </h:form>
 
-        <h:link id="createLink" outcome="/jsf/politician__create.xhtml" value="Create"/>
+        <h:link id="createLink" styleClass="btn-primary" outcome="/jsf/politician__create.xhtml" value="#{msg['common.create']}"/>
 
     </ui:define>
 </ui:composition>

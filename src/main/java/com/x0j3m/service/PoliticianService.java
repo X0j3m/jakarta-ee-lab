@@ -51,6 +51,13 @@ public class PoliticianService {
         return politician.orElseThrow();
     }
 
+    public List<PoliticianEntity> fetchAllByPartyIdEntity(UUID id) {
+        if (checkIsAdmin(securityContext)) {
+            return politicianRepository.getAllByPartyId(id);
+        }
+        return politicianRepository.getAllByPartyIdAndUsername(id, securityContext.getCallerPrincipal().getName());
+    }
+
     public List<PoliticianResponseDto> fetchAllByPartyId(UUID id) {
         if (checkIsAdmin(securityContext)) {
             return politicianRepository.getAllByPartyId(id)

@@ -4,12 +4,14 @@ import com.x0j3m.model.dto.politicalParty.PoliticalPartyResponseDto;
 import com.x0j3m.model.dto.politician.PoliticianResponseDto;
 import com.x0j3m.model.entity.PoliticalPartyEntity;
 import com.x0j3m.model.mapper.PoliticalPartyMapper;
+import com.x0j3m.security.PermissionsChecker;
 import com.x0j3m.service.PoliticalPartyService;
 import com.x0j3m.service.PoliticianService;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.security.enterprise.SecurityContext;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +28,8 @@ public class PoliticalPartyJsfElement implements Serializable {
     private PoliticalPartyService politicalPartyService;
     @Inject
     private PoliticianService politicianService;
+    @Inject
+    private SecurityContext securityContext;
 
     @Getter
     @Setter
@@ -38,6 +42,7 @@ public class PoliticalPartyJsfElement implements Serializable {
     public void init() throws IOException {
         try {
             PoliticalPartyEntity politicalPartyEntity = politicalPartyService.fetchById(UUID.fromString(id));
+            politicalPartyEntity.setPoliticians(politicianService.fetchAllByPartyIdEntity(politicalPartyEntity.getId()));
             politicalParty = PoliticalPartyMapper.toDto(politicalPartyEntity);
 
 
@@ -49,8 +54,12 @@ public class PoliticalPartyJsfElement implements Serializable {
         }
     }
 
-    public String deletePolitician(String politicianId) {
+    public void deletePolitician(String politicianId) {
         politicianService.deletePoliticianById(UUID.fromString(politicianId));
-        return "/jsf/political_party__view.xhtml?id=" + this.id + "&faces-redirect=true";
+        politicalParty = PoliticalPartyMapper.toDto(politicalPartyService.fetchById(UUID.fromString(politicalParty.id())));
     }
+
+//    public String deletePolitician(String politicianId) {
+//        return "/jsf/political_party__view.xhtml?id=" + this.id + "&faces-redirect=true";
+//    }
 }

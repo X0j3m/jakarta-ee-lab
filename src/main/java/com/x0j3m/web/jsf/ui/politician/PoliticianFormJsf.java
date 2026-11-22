@@ -1,19 +1,22 @@
 package com.x0j3m.web.jsf.ui.politician;
 
-import com.x0j3m.model.dto.user.UserResponseDto;
 import com.x0j3m.model.entity.PoliticalPartyEntity;
 import com.x0j3m.model.entity.PoliticianEntity;
 import com.x0j3m.model.entity.UserEntity;
+import com.x0j3m.security.PermissionsChecker;
 import com.x0j3m.service.PoliticalPartyService;
 import com.x0j3m.service.PoliticianService;
 import com.x0j3m.service.UserService;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.security.enterprise.SecurityContext;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +29,9 @@ public class PoliticianFormJsf implements Serializable {
     private PoliticalPartyService politicalPartyService;
     @Inject
     private UserService userService;
+
+    @Inject
+    private SecurityContext securityContext;
 
     @Getter
     @Setter
@@ -41,35 +47,11 @@ public class PoliticianFormJsf implements Serializable {
     private List<UserEntity> users;
 
     @Getter
-    @Setter
-    private String selectedPartyValue;
-    @Getter
-    @Setter
-    private String selectedUserValue;
-
-    @Getter
     private boolean exists;
 
-    public String save() {
-        if (selectedPartyValue != null
-                &&
-                !selectedPartyValue.isBlank()
-                &&
-                selectedUserValue != null
-                &&
-                !selectedUserValue.isBlank()) {
-            PoliticalPartyEntity party = politicalPartyService.fetchById(UUID.fromString(selectedPartyValue));
-            UserEntity user = userService.fetchUserEntityById(UUID.fromString(selectedUserValue));
-            politician.setPoliticalParty(party);
-            politician.setUser(user);
-        }
-
-        try {
-            politicianService.createPolitician(politician);
-        }catch (Exception ignored){}
-
-        return "/jsf/political_party__view.xhtml?id=" + politician.getPoliticalParty().getId() + "&faces-redirect=true";
-    }
+    @Getter
+    @Setter
+    private UUID selectedUserId;
 
     public void init() {
         try {
@@ -84,5 +66,42 @@ public class PoliticianFormJsf implements Serializable {
 
         politicalParties = politicalPartyService.fetchAll();
         users = userService.fetchAllEntities();
+
+        if (politician.getUser() == null) {
+            Principal principal = securityContext != null
+                    ? securityContext.getCallerPrincipal()
+                    : FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+
+            if (principal != null) {
+                String loggedUsername = principal.getName();
+
+                users.stream()
+                        .filter(u -> u.getUsername().equals(loggedUsername))
+                        .findFirst()
+                        .ifPresent(politician::setUser);
+            }
+        }
+
+        if (politician.getUser() != null) {
+            this.selectedUserId = politician.getUser().getId();
+        }
+    }
+
+    public String save() {
+        try {
+            politicianService.createPolitician(politician);
+        } catch (Exception ignored) {
+        }
+
+        if (selectedUserId != null) {
+            UserEntity user = userService.fetchUserEntityById(selectedUserId);
+            politician.setUser(user);
+        }
+
+        return "/jsf/political_party__view.xhtml?id=" + politician.getPoliticalParty().getId() + "&faces-redirect=true";
+    }
+
+    public boolean canEditOwner(){
+        return PermissionsChecker.checkIsAdmin(securityContext);
     }
 }

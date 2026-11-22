@@ -1,18 +1,18 @@
 :root {
-    --bg-page: #f4f6f9;
+    --bg-page: #f8fafc;
     --bg-card: #ffffff;
-    --bg-header: #0f172a;
-    --bg-nav: #1e293b;
-    --text-main: #1e293b;
+    --bg-header: #fdfdfd;
+    --bg-nav: #1b1b62;
+    --text-main: #0f172a;
     --text-muted: #64748b;
-    --text-light: #f8fafc;
+    --text-light: #334155;
     --primary: #2563eb;
     --primary-hover: #1d4ed8;
     --danger: #dc2626;
     --danger-hover: #b91c1c;
     --border-color: #e2e8f0;
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
     --radius: 8px;
 }
 
@@ -43,7 +43,7 @@ body > header {
 }
 
 body > header img.image {
-    height: 42px;
+    height: 84px;
     width: auto;
     object-fit: contain;
     border-radius: 6px;
@@ -68,7 +68,7 @@ body > nav {
 body > nav input[type="button"],
 body > nav button {
     background-color: rgba(255, 255, 255, 0.08);
-    color: var(--text-light);
+    color: var(--bg-card);
     border: 1px solid rgba(255, 255, 255, 0.14);
     padding: 0.45rem 1.1rem;
     border-radius: 6px;
@@ -80,8 +80,9 @@ body > nav button {
 
 body > nav input[type="button"]:hover,
 body > nav button:hover {
-    background-color: var(--primary);
-    border-color: var(--primary);
+    background-color: var(--bg-card);
+    border-color: var(--bg-card);
+    color: var(--text-main);
     transform: translateY(-1px);
 }
 
@@ -318,4 +319,91 @@ form.container button[type="submit"] {
 form.container input[type="submit"]:hover,
 form.container button[type="submit"]:hover {
     background-color: var(--primary-hover);
+}
+
+/* Nagłówki stron z przyciskami akcji (np. lista partii) */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.page-header h2 {
+    margin: 0;
+    color: var(--text-main);
+}
+
+/* Przycisk powrotu / drugorzędny */
+.btn-secondary {
+    display: inline-block;
+    background-color: var(--bg-nav);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-color);
+}
+
+.btn-primary {
+    display: inline-block;
+    background-color: var(--primary);
+    color: #ffffff;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+body > header .user-info {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 0.55rem 1.15rem;
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm);
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+body > header .user-info .user-name {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+body > header .user-info .logout-form {
+    display: inline-flex;
+    margin: 0;
+}
+
+body > header .user-info .btn-logout {
+    background-color: var(--danger);
+    color: #ffffff;
+    border: none;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+body > header .user-info .btn-logout:hover {
+    background-color: var(--danger-hover);
 }

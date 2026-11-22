@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html lang="en"
+<html lang="#{facesContext.viewRoot.locale.language}"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
       xmlns:ui="jakarta.faces.facelets"
@@ -9,22 +9,24 @@
     <h:head>
         <h:outputStylesheet library="css" name="index.css"/>
         <meta charset="UTF-8"/>
-        <title>Jakarta EE lab</title>
+        <title>#{msg['app.title']}</title>
     </h:head>
     <h:body>
         <header>
-            <h:graphicImage styleClass="image" library="img" name="logo.png"/>
-            <h1>Jakarta EE Lab</h1>
+            <h:graphicImage styleClass="image"
+                            library="#{msg['resource.locale']}"
+                            name="img/logo.png"
+                            alt="#{msg['header.logoAlt']}"/>
+            <h1>#{msg['app.title']}</h1>
+
+            <h:panelGroup layout="block" rendered="#{not empty request.userPrincipal}" styleClass="user-info">
+                <strong class="user-name">#{request.userPrincipal.name}</strong>
+            </h:panelGroup>
         </header>
 
         <nav>
-            <h:button
-                    value="Home"
-                    outcome="/index.xhtml"/>
-
-            <h:button
-                    value="Political Parties"
-                    outcome="/jsf/political_party__list.xhtml"/>
+            <h:button value="#{msg['nav.home']}" outcome="/index.xhtml"/>
+            <h:button value="#{msg['nav.parties']}" outcome="/jsf/political_party__list.xhtml"/>
         </nav>
 
         <main>
