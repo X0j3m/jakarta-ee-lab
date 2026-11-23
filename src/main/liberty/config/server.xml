@@ -18,9 +18,16 @@
 <!--        <properties URL="jdbc:h2:mem:jakarta-ee-lab;DB_CLOSE_DELAY=-1" user="sa" password=""/>-->
     </dataSource>
 
-    <mpJwt id="defaultMpJwt"
-           issuer="http://localhost:9000"
-           jwksUri="http://localhost:9000/oauth2/jwks"/>
+    <webApplication id="jakarta-ee-lab" contextRoot="/jakarta-ee-lab" location="jakarta-ee-lab.war">
+        <application-bnd>
+            <security-role name="admin">
+                <group name="admin" access-id="group:http://localhost:9000/admin" />
+            </security-role>
+            <security-role name="user">
+                <group name="user" access-id="group:http://localhost:9000/user" />
+            </security-role>
+        </application-bnd>
+    </webApplication>
 
     <!-- This template enables security. To get the full use of all the capabilities, a keystore and user registry are required. -->
 
@@ -50,7 +57,7 @@
     <applicationManager autoExpand="true"/>
 
     <!-- Configures the application on a specified context root -->
-    <webApplication id="jakarta-ee-lab" contextRoot="/jakarta-ee-lab" location="jakarta-ee-lab.war" />
+<!--    <webApplication id="jakarta-ee-lab" contextRoot="/jakarta-ee-lab" location="jakarta-ee-lab.war" />-->
 
     <!-- Default SSL configuration enables trust for default certificates from the Java runtime -->
     <ssl id="defaultSSLConfig" trustDefaultCerts="true" />

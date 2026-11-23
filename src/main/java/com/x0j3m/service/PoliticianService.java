@@ -61,7 +61,8 @@ public class PoliticianService {
                     .map(PoliticianMapper::toDto)
                     .toList();
         }
-        return politicianRepository.getAllByPartyIdAndUsername(id, securityContext.getCallerPrincipal().getName())
+        String callerName = securityContext.getCallerPrincipal().getName();
+        return politicianRepository.getAllByPartyIdAndUsername(id, callerName)
                 .stream()
                 .map(PoliticianMapper::toDto)
                 .toList();
