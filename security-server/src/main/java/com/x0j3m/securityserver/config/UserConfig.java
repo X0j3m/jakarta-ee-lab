@@ -35,7 +35,6 @@ public class UserConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         DelegatingPasswordEncoder encoder = (DelegatingPasswordEncoder) PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        encoder.setDefaultPasswordEncoderForMatches(new JakartaPbkdf2PasswordEncoder());
         encoder.setDefaultPasswordEncoderForMatches(NoOpPasswordEncoder.getInstance());
         return encoder;
     }

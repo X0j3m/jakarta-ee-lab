@@ -16,6 +16,7 @@ import jakarta.ws.rs.core.MediaType;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Path("political-parties/{politicalPartyId}/politicians")
@@ -77,12 +78,18 @@ public class PoliticianController {
             @PathParam("politicalPartyId") String politicalPartyId,
             @PathParam("id") String id,
             PoliticianRequestDto politicianRequestDto) {
+        String username = securityContext.getCallerPrincipal().getName();
+        UserResponseDto user = userService.fetchUserByUsername(username);
+
         UUID ownerId = politicianService.getOwnerId(UUID.fromString(id));
+        if (ownerId != null && !String.valueOf(ownerId).equals(user.id())) {
+            throw new NotFoundException();
+        }
 
         PoliticianEntity entity = PoliticianMapper.toEntity(
                 UUID.fromString(id),
                 UUID.fromString(politicalPartyId),
-                ownerId,
+                ownerId == null ? UUID.fromString(user.id()) : ownerId,
                 politicianRequestDto
         );
 

@@ -2,6 +2,7 @@ package com.x0j3m.service;
 
 import com.x0j3m.data.PoliticianRepository;
 import com.x0j3m.model.dto.politician.PoliticianResponseDto;
+import com.x0j3m.model.dto.user.UserResponseDto;
 import com.x0j3m.model.entity.PoliticianEntity;
 import com.x0j3m.model.mapper.PoliticianMapper;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -24,6 +25,8 @@ import static com.x0j3m.security.PermissionsChecker.checkIsAdminOrOwner;
 public class PoliticianService {
     @Inject
     private PoliticianRepository politicianRepository;
+    @Inject
+    private UserService userService;
     @Inject
     private SecurityContext securityContext;
 
@@ -64,8 +67,10 @@ public class PoliticianService {
                 .toList();
     }
 
-    public String createPolitician(PoliticianEntity politicianEntity){
-        if (checkIsAdminOrOwner(securityContext, politicianEntity.getUser().getUsername())) {
+    public String createPolitician(PoliticianEntity politicianEntity) {
+        UserResponseDto owner = userService.fetchUserById(politicianEntity.getUser().getId());
+
+        if (checkIsAdminOrOwner(securityContext, owner.username())) {
             politicianRepository.save(politicianEntity);
             return politicianEntity.getId().toString();
         } else {

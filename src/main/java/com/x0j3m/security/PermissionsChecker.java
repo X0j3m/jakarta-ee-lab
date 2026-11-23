@@ -8,7 +8,7 @@ public class PermissionsChecker {
     }
 
     public static boolean checkIsOwner(SecurityContext securityContext, String ownerName) {
-        if (securityContext.isCallerInRole("user")) {
+        if (securityContext.isCallerInRole("user") || securityContext.isCallerInRole("admin")) {
             return securityContext.getCallerPrincipal().getName().equals(ownerName);
         }
         return false;

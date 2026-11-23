@@ -20,7 +20,7 @@
 
     <mpJwt id="defaultMpJwt"
            issuer="http://localhost:9000"
-           jwksUri="http://localhost:9000/oauth2/jwks" />
+           jwksUri="http://localhost:9000/oauth2/jwks"/>
 
     <!-- This template enables security. To get the full use of all the capabilities, a keystore and user registry are required. -->
 
