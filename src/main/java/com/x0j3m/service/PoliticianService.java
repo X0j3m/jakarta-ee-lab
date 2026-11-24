@@ -6,11 +6,10 @@ import com.x0j3m.model.entity.PoliticianEntity;
 import com.x0j3m.model.mapper.PoliticianMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.security.enterprise.AuthenticationException;
 import jakarta.security.enterprise.SecurityContext;
-import jakarta.ws.rs.ForbiddenException;
 import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +20,7 @@ import static com.x0j3m.security.PermissionsChecker.checkIsAdminOrOwner;
 
 @ApplicationScoped
 @NoArgsConstructor
+@Slf4j
 public class PoliticianService {
     @Inject
     private PoliticianRepository politicianRepository;
@@ -71,9 +71,15 @@ public class PoliticianService {
                 .toList();
     }
 
-    public String createPolitician(PoliticianEntity politicianEntity){
+    public String createPolitician(PoliticianEntity politicianEntity) {
+        String userName = securityContext.getCallerPrincipal().getName();
+
+        String op = existsById(politicianEntity.getId()) ? "UPDATE" : "CREATE";
+
         if (checkIsAdminOrOwner(securityContext, politicianEntity.getUser().getUsername())) {
             politicianRepository.save(politicianEntity);
+            String message = userName + " " + op + " politician ID: " + politicianEntity.getId();
+            log.info(message);
             return politicianEntity.getId().toString();
         } else {
             throw new NotFoundException();
@@ -81,9 +87,13 @@ public class PoliticianService {
     }
 
     public void deletePoliticianById(UUID id) {
+        String userName = securityContext.getCallerPrincipal().getName();
+
         if (existsById(id)) {
             if (checkIsAdminOrOwner(securityContext, getOwner(id))) {
                 politicianRepository.delete(id);
+                String message = userName + " DELETE politician ID: " + id;
+                log.info(message);
             }
         }
     }

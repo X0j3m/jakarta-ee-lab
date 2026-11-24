@@ -56,7 +56,9 @@ public class PoliticalPartyJsfElement implements Serializable {
 
     public void deletePolitician(String politicianId) {
         politicianService.deletePoliticianById(UUID.fromString(politicianId));
-        politicalParty = PoliticalPartyMapper.toDto(politicalPartyService.fetchById(UUID.fromString(politicalParty.id())));
+        PoliticalPartyEntity politicalPartyEntity = politicalPartyService.fetchById(UUID.fromString(id));
+        politicalPartyEntity.setPoliticians(politicianService.fetchAllByPartyIdEntity(politicalPartyEntity.getId()));
+        politicalParty = PoliticalPartyMapper.toDto(politicalPartyEntity);
     }
 
 //    public String deletePolitician(String politicianId) {

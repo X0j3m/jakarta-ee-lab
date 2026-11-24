@@ -22,6 +22,8 @@
            issuer="http://localhost:9000"
            jwksUri="http://localhost:9000/oauth2/jwks" />
 
+    <logging consoleLogLevel="INFO" traceSpecification="*=info:com.x0j3m.*=all"/>
+
     <httpSession cookieName="LIBERTY_JSESSIONID" />
 
     <!-- This template enables security. To get the full use of all the capabilities, a keystore and user registry are required. -->
