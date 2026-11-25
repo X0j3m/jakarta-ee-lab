@@ -5,6 +5,7 @@ import com.x0j3m.model.dto.politician.PoliticianResponseDto;
 import com.x0j3m.model.dto.user.UserResponseDto;
 import com.x0j3m.model.entity.PoliticianEntity;
 import com.x0j3m.model.mapper.PoliticianMapper;
+import com.x0j3m.security.PermissionsChecker;
 import com.x0j3m.service.PoliticianService;
 import com.x0j3m.service.UserService;
 import jakarta.inject.Inject;
@@ -82,7 +83,8 @@ public class PoliticianController {
         UserResponseDto user = userService.fetchUserByUsername(username);
 
         UUID ownerId = politicianService.getOwnerId(UUID.fromString(id));
-        if (ownerId != null && !String.valueOf(ownerId).equals(user.id())) {
+        if (!PermissionsChecker.checkIsAdmin(securityContext) &&
+                ownerId != null && !String.valueOf(ownerId).equals(user.id())) {
             throw new NotFoundException();
         }
 
@@ -101,6 +103,15 @@ public class PoliticianController {
     public void deleteById(
             @PathParam("politicalPartyId") String politicalPartyId,
             @PathParam("id") String id) {
+        String username = securityContext.getCallerPrincipal().getName();
+        UserResponseDto user = userService.fetchUserByUsername(username);
+        UUID ownerId = politicianService.getOwnerId(UUID.fromString(id));
+        if (!PermissionsChecker.checkIsAdmin(securityContext) &&
+                !String.valueOf(ownerId).equals(user.id())) {
+            throw new NotFoundException();
+        }
+
+
         if (politicianService.belongsToPoliticalParty(UUID.fromString(id), UUID.fromString(politicalPartyId))) {
             politicianService.deletePoliticianById(UUID.fromString(id));
         } else {
