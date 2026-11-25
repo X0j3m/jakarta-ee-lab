@@ -6,6 +6,5 @@ import jakarta.ws.rs.core.Application;
 import org.eclipse.microprofile.auth.LoginConfig;
 
 @ApplicationPath("/api/rest")
-//@LoginConfig(authMethod = "MP-JWT")
 @DeclareRoles({"admin", "user"})
 public class AppConfig extends Application {}

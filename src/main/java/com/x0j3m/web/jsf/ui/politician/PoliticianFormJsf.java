@@ -12,6 +12,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.security.enterprise.SecurityContext;
+import jakarta.ws.rs.NotFoundException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -57,6 +58,9 @@ public class PoliticianFormJsf implements Serializable {
         try {
             politician = politicianService.fetchByIdEntity(UUID.fromString(id));
             exists = true;
+            if (!PermissionsChecker.checkIsAdminOrOwner(securityContext, politician.getUser().getUsername())) {
+                throw new NotFoundException();
+            }
         } catch (Exception e) {
             politician = new PoliticianEntity();
             id = UUID.randomUUID().toString();
@@ -101,7 +105,7 @@ public class PoliticianFormJsf implements Serializable {
         return "/jsf/political_party__view.xhtml?id=" + politician.getPoliticalParty().getId() + "&faces-redirect=true";
     }
 
-    public boolean canEditOwner(){
+    public boolean canEditOwner() {
         return PermissionsChecker.checkIsAdmin(securityContext);
     }
 }
