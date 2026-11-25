@@ -4,7 +4,9 @@ import com.x0j3m.data.PoliticalPartyRepository;
 import com.x0j3m.model.dto.politicalParty.PoliticalPartyRequestDto;
 import com.x0j3m.model.dto.politicalParty.PoliticalPartyResponseDto;
 import com.x0j3m.model.entity.PoliticalPartyEntity;
+import com.x0j3m.model.entity.PoliticianEntity;
 import com.x0j3m.model.mapper.PoliticalPartyMapper;
+import com.x0j3m.model.mapper.PoliticianMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
@@ -22,10 +24,17 @@ public class PoliticalPartyService {
     @Inject
     private PoliticalPartyRepository politicalPartyRepository;
     @Inject
+    private PoliticianService politicianService;
+    @Inject
     private SecurityContext securityContext;
 
     public List<PoliticalPartyEntity> fetchAll() {
-        return politicalPartyRepository.getAll();
+        List<PoliticalPartyEntity> all = politicalPartyRepository.getAll();
+        for (PoliticalPartyEntity p : all) {
+            p.setPoliticians(politicianService.fetchAllByPartyIdEntity(p.getId()));
+        }
+
+        return all;
     }
 
     public PoliticalPartyEntity fetchById(UUID id) {

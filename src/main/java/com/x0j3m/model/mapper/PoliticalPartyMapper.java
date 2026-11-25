@@ -26,7 +26,7 @@ public class PoliticalPartyMapper {
                 .orientation(politicalPartyEntity.getOrientation().toString().substring(0, 1).toUpperCase()
                         +
                         politicalPartyEntity.getOrientation().toString().substring(1).toLowerCase())
-//                .politicians(politicalPartyEntity.getPoliticians().stream().map(PoliticianMapper::toDto).toList())
+                .politicians(politicalPartyEntity.getPoliticians().stream().map(PoliticianMapper::toDto).toList())
                 .build();
     }
 }

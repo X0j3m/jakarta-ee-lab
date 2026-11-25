@@ -68,6 +68,14 @@ public class PoliticianService {
                 .toList();
     }
 
+    public List<PoliticianEntity> fetchAllByPartyIdEntity(UUID id) {
+        if (checkIsAdmin(securityContext)) {
+            return politicianRepository.getAllByPartyId(id);
+        }
+        String callerName = securityContext.getCallerPrincipal().getName();
+        return politicianRepository.getAllByPartyIdAndUsername(id, callerName);
+    }
+
     public String createPolitician(PoliticianEntity politicianEntity) {
         UserResponseDto owner = userService.fetchUserById(politicianEntity.getUser().getId());
 
